@@ -9,5 +9,17 @@ package mondoincantato;
  * @author trivella.augusto
  */
 public class Eroe {
+    private String nome;
+    private boolean ability;
+    private int sete,fame,vita;
+
+    public Eroe(String nome, boolean ability, int sete, int fame, int vita) {
+        this.nome = nome;
+        this.ability = ability;
+        this.sete = sete;
+        this.fame = fame;
+        this.vita = vita;
+    }
+    
     
 }

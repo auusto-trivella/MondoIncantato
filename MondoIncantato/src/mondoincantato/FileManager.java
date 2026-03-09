@@ -6,8 +6,8 @@ package mondoincantato;
 
 /**
  *
- * @author trivella.augusto
+ * @author TRIVELLA.AUGUSTO
  */
-public class Minotauro {
+public class FileManager {
     
 }
