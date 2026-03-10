@@ -6,7 +6,7 @@ package mondoincantato;
 
 /**
  *
- * @author trivella.augusto
+ * @author TRIVELLA.AUGUSTO
  */
 public class FileManager {
     

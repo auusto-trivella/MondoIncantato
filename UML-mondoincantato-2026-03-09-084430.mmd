@@ -1,0 +1,41 @@
+classDiagram
+direction TB
+    class Eroe {
+	    -boolean ability
+	    -String nome
+	    -int sete
+	    -int fame
+	    -int vita
+	    +Eroe()
+    }
+
+    class FileManager {
+	    +salvaCsv()
+	    +caricaCsv()
+	    +salvaSer()
+	    +caricaSer()
+    }
+
+    class GestoreEvento {
+	    -int evento
+	    +sceltaEvento()
+    }
+
+    class Gestore {
+	    -int cibo
+	    -int acqua
+	    -Boolean modality
+	    +bevi()
+	    +selezionaPersonaggio()
+	    +magia()
+	    +oggettoBuono()
+	    +personaggioBuono()
+	    +imprevistoCattivo()
+	    +personaggioCattivo()
+	    +checkMod()
+	    +abilityLuck()
+    }
+
+    GestoreEvento *-- Eroe
+    GestoreEvento -- Gestore
+    FileManager -- Gestore

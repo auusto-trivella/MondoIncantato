@@ -1,33 +1,21 @@
-<<<<<<< HEAD
-=======
-package mondoincantato;
-
->>>>>>> 2e98cea65d916082325d685ad4b9ecd650b22a8d
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-<<<<<<< HEAD
 package mondoincantato;
 
 /**
  *
- * @author trivella.augusto
-=======
-
-/**
- *
  * @author TRIVELLA.AUGUSTO
->>>>>>> 2e98cea65d916082325d685ad4b9ecd650b22a8d
  */
-public class SchermataIniziale extends javax.swing.JFrame {
+public class Turno extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SchermataIniziale.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Turno.class.getName());
 
     /**
-     * Creates new form SchermataIniziale
+     * Creates new form Turno
      */
-    public SchermataIniziale() {
+    public Turno() {
         initComponents();
     }
 
@@ -78,7 +66,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SchermataIniziale().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Turno().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
