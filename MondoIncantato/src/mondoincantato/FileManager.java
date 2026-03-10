@@ -8,6 +8,6 @@ package mondoincantato;
  *
  * @author trivella.augusto
  */
-public class Minotauro {
+public class FileManager {
     
 }

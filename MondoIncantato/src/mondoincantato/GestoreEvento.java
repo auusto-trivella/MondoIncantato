@@ -8,6 +8,6 @@ package mondoincantato;
  *
  * @author trivella.augusto
  */
-public class Orco {
+public class GestoreEvento {
     
 }
