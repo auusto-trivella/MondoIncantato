@@ -4,20 +4,10 @@
  */
 package mondoincantato;
 
-import java.util.Random;
-
 /**
  *
  * @author trivella.augusto
  */
-public class GestoreEvento {
-    
-    private int evento=0;
-    
-    public int sceltaEvento(){
-        Random random = new Random();
-        int evento = random.nextInt(4)+ 1; 
-        return evento;
-    }
+public class Borsa {
     
 }

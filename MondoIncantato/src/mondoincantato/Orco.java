@@ -4,20 +4,12 @@
  */
 package mondoincantato;
 
-import java.util.Random;
-
 /**
  *
  * @author trivella.augusto
  */
-public class GestoreEvento {
+public class Orco extends Eroe{
     
-    private int evento=0;
     
-    public int sceltaEvento(){
-        Random random = new Random();
-        int evento = random.nextInt(4)+ 1; 
-        return evento;
-    }
     
 }

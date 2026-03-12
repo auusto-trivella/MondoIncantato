@@ -2,37 +2,46 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mondoincantato;
-
-/**
- *
- * @author trivella.augusto
- */
 public class Eroe {
-<<<<<<< HEAD
-    private int vita, fame,sete;
-    private String nome,ability;
-
-    public Eroe(int vita, int fame, int sete, String nome, String ability) {
-        this.vita = vita;
-        this.fame = fame;
-        this.sete = sete;
-        this.nome = nome;
-        this.ability = ability;
-    }
-=======
+    private int vita, fame, sete;
     private String nome;
     private boolean ability;
-    private int sete,fame,vita;
 
-    public Eroe(String nome, boolean ability, int sete, int fame, int vita) {
+    public Eroe(String nome, boolean ability, int vita, int fame, int sete) {
         this.nome = nome;
         this.ability = ability;
-        this.sete = sete;
-        this.fame = fame;
         this.vita = vita;
+        this.fame = fame;
+        this.sete = sete;
+    }
+
+    public int getVita() {
+        return vita;
     }
     
+        public void setVita(int vita) {
+        this.vita = vita;
+    }
+
+    public int getFame() {
+        return fame;
+    }
+
+    public void setFame(int fame) {
+        this.fame = fame;
+    }
+
+    public int getSete() {
+        return sete;
+    }
+
+    public void setSete(int sete) {
+        this.sete = sete;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
     
->>>>>>> 2e98cea65d916082325d685ad4b9ecd650b22a8d
+
 }

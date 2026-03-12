@@ -1,24 +1,14 @@
-<<<<<<< HEAD
-=======
+
 package mondoincantato;
 
->>>>>>> 2e98cea65d916082325d685ad4b9ecd650b22a8d
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-<<<<<<< HEAD
-package mondoincantato;
-
-/**
- *
- * @author trivella.augusto
-=======
-
 /**
  *
  * @author TRIVELLA.AUGUSTO
->>>>>>> 2e98cea65d916082325d685ad4b9ecd650b22a8d
  */
 public class SchermataIniziale extends javax.swing.JFrame {
     

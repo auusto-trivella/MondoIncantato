@@ -14,6 +14,8 @@ public class MondoIncantato {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        
         /*
         Mondo frame = new Mondo();
         frame.setSize(1000, 600);

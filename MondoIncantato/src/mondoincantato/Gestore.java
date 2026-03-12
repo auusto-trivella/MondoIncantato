@@ -17,18 +17,18 @@ public class Gestore {
         this.acqua = acqua;
         this.modalityDemon = modalityDemon;
     }
-    
-    public void bevi(){
+    /*
+    public void bevi(Eroe eroe){
         if (acqua>=1){
-            sete-=10;
-            vita+=10;
+            eroe.sete-=10;
+            eroe.vita+=10;
             acqua--;
         }
     }
-    public void mangia(){
+    public void mangia(Eroe eroe){
         if (cibo>=1){
-            fame-=10;
-            vita+=15;
+            eroe.fame-=10;
+            eroe.vita+=15;
             cibo--;
         }
     }
@@ -39,31 +39,30 @@ public class Gestore {
         }
     }
     
-    public void scelaPersonaggio(){
-        if(modalityDemon==false){
-            if(nPersonaggio==1){//gnomo
-            vita=50;
-            fame=-30;
-            sete=-30;
+    public void sceltaPersonaggio(Eroe eroe) { 
+    
+        if (modalityDemon == false) {
+        
+            if (nPersonaggio == 1) { // GNOMO
+                eroe.setVita(50);
+                eroe.setFame(-30);
+                eroe.setSete(-30);
+            } 
+            else if (nPersonaggio == 2) { // ORCO
+                eroe.setVita(100);
+                eroe.setFame(-20);
+                eroe.setSete(0);
+            } 
+            else if (nPersonaggio == 3) { // ELFO
+                eroe.setVita(70);
+                eroe.setFame(0);
+                eroe.setSete(0);
+            } 
+            else { 
+                eroe.setVita(110);
+                eroe.setFame(0);
+                eroe.setSete(-20);
             }
-        }
-        
-        if(nPersonaggio==2){//orco
-            vita=100;
-            fame=-20;
-            sete=0;  
-        }
-        
-        if(nPersonaggio==3){//elfo
-            vita=70;
-            fame=0;
-            sete=0;
-        }
-        
-        else{//minotauro
-            vita=110;
-            fame=0;
-            sete=-20;  
-        }
-    }
+        } 
+    }*/
 }
