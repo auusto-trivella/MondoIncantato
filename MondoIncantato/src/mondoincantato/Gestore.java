@@ -11,21 +11,22 @@ package mondoincantato;
 public class Gestore {
     private int cibo,acqua,nPersonaggio;
     private boolean modalityDemon;
+    private Eroe eroe= new Eroe("nessuno",false,0,0,0);
 
     public Gestore(int cibo, int acqua, boolean modalityDemon) {
         this.cibo = cibo;
         this.acqua = acqua;
         this.modalityDemon = modalityDemon;
     }
-    /*
-    public void bevi(Eroe eroe){
+    
+    public void bevi(){
         if (acqua>=1){
             eroe.sete-=10;
             eroe.vita+=10;
             acqua--;
         }
     }
-    public void mangia(Eroe eroe){
+    public void mangia(){
         if (cibo>=1){
             eroe.fame-=10;
             eroe.vita+=15;
@@ -34,35 +35,26 @@ public class Gestore {
     }
     
     public void checkMod(){
-        if(modalityDemon=true){
-            //gnomo sparisce
-        }
+        modalityDemon=true;
     }
     
-    public void sceltaPersonaggio(Eroe eroe) { 
+    public void sceltaPersonaggio() { 
     
         if (modalityDemon == false) {
         
             if (nPersonaggio == 1) { // GNOMO
-                eroe.setVita(50);
-                eroe.setFame(-30);
-                eroe.setSete(-30);
+                eroe = new Eroe("FIZZLE",false,50,-30,-30);
             } 
+        }    
             else if (nPersonaggio == 2) { // ORCO
-                eroe.setVita(100);
-                eroe.setFame(-20);
-                eroe.setSete(0);
+                eroe = new Eroe("KORG",false,100,-20,0);
             } 
             else if (nPersonaggio == 3) { // ELFO
-                eroe.setVita(70);
-                eroe.setFame(0);
-                eroe.setSete(0);
+                eroe = new Eroe("LIRAEL",false,70,0,0);
             } 
-            else { 
-                eroe.setVita(110);
-                eroe.setFame(0);
-                eroe.setSete(-20);
+            else { //MINOTAURO
+                eroe = new Eroe("ASTER",false,110,0,-20);
             }
-        } 
-    }*/
+         
+    }
 }

@@ -9,5 +9,10 @@ package mondoincantato;
  * @author trivella.augusto
  */
 public class Borsa {
+    private String tipoOgg;
+    
+    public void aggiungiOgg(){
+        
+    }
     
 }
