@@ -4,15 +4,41 @@
  */
 package mondoincantato;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author trivella.augusto
  */
 public class Borsa {
-    private String tipoOgg;
+    ArrayList<Cibo> listaCibo= new ArrayList<>();
+    ArrayList<Acqua> listaAcqua= new ArrayList<>();
     
-    public void aggiungiOgg(){
-        
+    public void aggiungiCibo(){
+        listaCibo.add();
     }
     
+    public void togliCibo(){
+                if (!listaCibo.isEmpty()) {
+            listaCibo.remove(0);
+        }
+    }
+    
+    public void aggiungiAcqua(){
+        listaAcqua.add();
+    }
+    
+    public void togliAcqua(){
+        if (!listaAcqua.isEmpty()) {
+            listaAcqua.remove(0);
+        }
+    }
+    
+    public int contaAcqua(){
+        return listaAcqua.size();
+    }
+    
+    public int contaCibo(){
+        return listaCibo.size();
+    }
 }

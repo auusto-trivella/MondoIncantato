@@ -1,10 +1,13 @@
+package mondoincantato;
+
 
 public class Eroe {
     private int vita, fame, sete;
     private String nome;
-    private boolean ability;
+    private boolean ability,lukcy;
 
-    public Eroe(String nome, boolean ability, int vita, int fame, int sete) {
+    public Eroe(String nome, boolean ability, int vita, int fame, int sete,boolean lucky) {
+        this.lukcy=lucky;
         this.nome = nome;
         this.ability = ability;
         this.vita = vita;
