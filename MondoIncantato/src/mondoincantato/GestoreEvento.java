@@ -12,11 +12,11 @@ import java.util.Random;
  */
 public class GestoreEvento {
     
-    private int evento=0,indiceF=101;
+    private int evento=0;
     Random random = new Random();
     
     public int sceltaEvento(){
-        evento = random.nextInt(indiceF)+ 1; 
+        evento = random.nextInt(101)+ 1; 
         return evento;
     }
     
@@ -26,10 +26,14 @@ public class GestoreEvento {
                 int oggetto = random.nextInt(2); 
             
                 if(oggetto==0){
-                    //+2 acqua
+                    for(int i=0;i<2;i++){
+                    borsa.aggiungiAcqua();
+                    }
                 }
                 else{
-                    //+2 cibo
+                   for(int i=0;i<2;i++){
+                    borsa.aggiungiCibo();
+                    }
                 }
             }
         }
@@ -38,10 +42,10 @@ public class GestoreEvento {
                 int oggetto = random.nextInt(2); 
             
                 if(oggetto==0){
-                    //+2 acqua
+                    borsa.aggiungiAcqua();
                 }
                 else{
-                    //+2 cibo
+                    borsa.aggiungiCibo();
                 }
             }
         }    
@@ -53,13 +57,13 @@ public class GestoreEvento {
                 int persGood = random.nextInt(3); 
             
                 if(persGood==0){//FATA
-                    eroe.setVita(eroe.getVita()+20);
+                    eroe.setVita(eroe.getVita()+22);
                 }
                 if(persGood==1){//DRUIDO
-                    eroe.setSete(eroe.getSete()-20);
+                    eroe.setSete(eroe.getSete()-22);
                 }
                 if(persGood==2){//LOCANDIERE
-                    eroe.setFame(eroe.getFame()-20);
+                    eroe.setFame(eroe.getFame()-22);
                 }
             }
         }
@@ -86,10 +90,10 @@ public class GestoreEvento {
                 int eventoBad = random.nextInt(2); 
             
                 if(eventoBad==0){//SICCITA'
-                    eroe.setSete(eroe.getSete()+20);
+                    eroe.setSete(eroe.getSete()+22);
                 }
                 else{//DISSENTERIA
-                    eroe.setFame(eroe.getFame()+10);
+                    eroe.setFame(eroe.getFame()+12);
                 }
             }
         }
@@ -113,10 +117,10 @@ public class GestoreEvento {
                 int persBad = random.nextInt(2); 
             
                 if(persBad==0){//BANDITO
-                    eroe.setVita(eroe.getVita()-10);
+                    eroe.setVita(eroe.getVita()-9);
                 }
                 else{//DRAGO
-                    eroe.setVita(eroe.getVita()-30);
+                    eroe.setVita(eroe.getVita()-27);
                 }
             }
         }

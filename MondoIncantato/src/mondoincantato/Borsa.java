@@ -14,24 +14,26 @@ public class Borsa {
     ArrayList<Cibo> listaCibo= new ArrayList<>();
     ArrayList<Acqua> listaAcqua= new ArrayList<>();
     
-    public void aggiungiCibo(){
-        listaCibo.add();
+    public void aggiungiCibo(Cibo nuovoCibo){
+       listaCibo.add(new Cibo());
     }
     
-    public void togliCibo(){
-                if (!listaCibo.isEmpty()) {
-            listaCibo.remove(0);
+    public Cibo consumaCibo() {
+        if (!listaCibo.isEmpty()) {
+            return listaCibo.remove(0);
         }
+        return null;
     }
     
-    public void aggiungiAcqua(){
-        listaAcqua.add();
+    public void aggiungiAcqua(Acqua nuovaAcqua){
+        listaAcqua.add(new Acqua());
     }
     
-    public void togliAcqua(){
+    public Acqua consumaAcqua() {
         if (!listaAcqua.isEmpty()) {
-            listaAcqua.remove(0);
+            return listaAcqua.remove(0);
         }
+        return null;
     }
     
     public int contaAcqua(){

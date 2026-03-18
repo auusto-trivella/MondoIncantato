@@ -19,7 +19,7 @@ public class Eroe {
         return vita;
     }
     
-        public void setVita(int vita) {
+    public void setVita(int vita) {
         this.vita = vita;
     }
 

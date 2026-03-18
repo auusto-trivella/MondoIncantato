@@ -10,13 +10,9 @@ package mondoincantato;
  */
 public class Acqua {
     
-    private int puntiSete;
+   private int idratazione = 10;
 
-    public Acqua(int puntiSete) {
-        this.puntiSete = puntiSete;
-    }
-
-    public int getSazieta() {
-        return puntiSete;
+    public int getIdratazione() {
+        return idratazione;
     }
 }

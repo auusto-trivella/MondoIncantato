@@ -22,14 +22,14 @@ public class Gestore {
     
     public void bevi(Eroe eroe,Borsa borsa){
         if(borsa.contaAcqua() > 0) {
-            borsa.togliAcqua();
+            borsa.consumaAcqua();
             eroe.setSete(eroe.getSete() - 10);
         } 
     }
 
     public void mangia(Eroe eroe,Borsa borsa){
         if(borsa.contaCibo() > 0) {
-            borsa.togliCibo();
+            borsa.consumaCibo();
             eroe.setFame(eroe.getFame() - 10);
         }    
     }
@@ -89,5 +89,6 @@ public class Gestore {
                 }
             }
         }
+        ability=false;
     }
 }

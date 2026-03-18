@@ -10,14 +10,9 @@ package mondoincantato;
  */
 public class Cibo {
     
-    private int sazieta;
-
-    public Cibo(int sazieta) {
-        this.sazieta = sazieta;
-    }
+    private int sazieta = 10; 
 
     public int getSazieta() {
         return sazieta;
     }
-    
 }
