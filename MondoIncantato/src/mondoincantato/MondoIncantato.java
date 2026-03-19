@@ -15,12 +15,10 @@ public class MondoIncantato {
      */
     public static void main(String[] args) {
         
-        
-        /*
-        Mondo frame = new Mondo();
-        frame.setSize(1000, 600);
-        frame.setVisible(true);
-        */
+        Avvio f1 = new Avvio();
+        SchermataIniziale f2= new SchermataIniziale();
+        Turno f3= new Turno();
+        f1.setVisible(true);
     }
     
 }

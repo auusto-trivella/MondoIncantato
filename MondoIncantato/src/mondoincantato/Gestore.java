@@ -34,8 +34,8 @@ public class Gestore {
         }    
     }
     
-    public void checkMod(){
-        modalityDemon=true;
+    public void setMod(boolean val){
+        modalityDemon=val;
     }
     
     public void sceltaPersonaggio(Eroe eroe) { 

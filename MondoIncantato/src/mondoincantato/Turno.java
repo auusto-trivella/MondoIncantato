@@ -15,6 +15,7 @@ public class Turno extends javax.swing.JFrame {
     /**
      * Creates new form Turno
      */
+    
     public Turno() {
         initComponents();
     }

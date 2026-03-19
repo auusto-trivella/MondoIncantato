@@ -17,9 +17,13 @@ public class SchermataIniziale extends javax.swing.JFrame {
     /**
      * Creates new form SchermataIniziale
      */
+    private Gestore g;
+    private SceltaPersonaggio f2;
     public SchermataIniziale() {
         initComponents();
-        jLabel2.setText("<html>Ti hanno rinchiuso in una capsula con la forza,<br>ti sei svegliato in un mondo a se stante.<br>Sei sconvolto, ma devi prendere una scelta in base alla difficoltà che scieglierai la tua vita sarà più semplice o più complicata.<br>Nella prossima schermata ti verrà data la possibilità di scegliere il tuo eroe, buona foruna</html>");
+        f2 = new SceltaPersonaggio();
+        g = new Gestore(false);
+        jLabel2.setText("Ti hanno rinchiuso in una capsula con la forza,\n ti sei svegliato in un mondo a se stante.\n Sei sconvolto, ma devi prendere una scelta in base alla difficoltà che scieglierai la tua vita sarà più semplice o più complicata. \n Nella prossima schermata ti verrà data la possibilità di scegliere il tuo eroe, buona foruna");
     }
 
     /**
@@ -50,12 +54,27 @@ public class SchermataIniziale extends javax.swing.JFrame {
         jLabel3.setText("SCEGLI DIFFICOLA':");
 
         difNormale.setText("NORMALE");
+        difNormale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                difNormaleActionPerformed(evt);
+            }
+        });
 
         difDemone.setText("DEMONE");
         difDemone.setActionCommand("");
+        difDemone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                difDemoneActionPerformed(evt);
+            }
+        });
 
         cambioPag.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
         cambioPag.setText("NEXT");
+        cambioPag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambioPagActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,16 +89,16 @@ public class SchermataIniziale extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(50, 50, 50))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(202, 202, 202)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(difDemone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(difNormale, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
                         .addGap(80, 80, 80))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(242, 242, 242))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(311, 311, 311)
+                .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,19 +107,35 @@ public class SchermataIniziale extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(difNormale, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(difDemone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(157, 157, 157)
-                .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(difNormale, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(difDemone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(276, 276, 276))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(173, 173, 173)
+                        .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void difNormaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difNormaleActionPerformed
+        g.setMod(false);
+    }//GEN-LAST:event_difNormaleActionPerformed
+
+    private void difDemoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difDemoneActionPerformed
+        g.setMod(true);
+    }//GEN-LAST:event_difDemoneActionPerformed
+
+    private void cambioPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioPagActionPerformed
+        f2.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cambioPagActionPerformed
 
     /**
      * @param args the command line arguments

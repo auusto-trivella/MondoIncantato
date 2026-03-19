@@ -8,11 +8,14 @@ package mondoincantato;
  *
  * @author trivella.augusto
  */
-public class Cibo {
+public class Cure {
+    private int valCibo=10, valAcqua=10;
     
-    private int sazieta = 10; 
+    public int getValoreCibo() {
+        return valCibo;
+    }
 
-    public int getSazieta() {
-        return sazieta;
+    public int getValoreAcqua() {
+        return valAcqua;
     }
 }

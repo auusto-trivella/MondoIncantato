@@ -4,14 +4,6 @@
  */
 package mondoincantato;
 
-/**
- *
-<<<<<<< HEAD
- * @author trivella.augusto
-=======
- * @author TRIVELLA.AUGUSTO
->>>>>>> 2e98cea65d916082325d685ad4b9ecd650b22a8d
- */
 public class SceltaPersonaggio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SceltaPersonaggio.class.getName());
@@ -19,8 +11,10 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
     /**
      * Creates new form SceltaPersonaggio
      */
+    private Turno f3;
     public SceltaPersonaggio() {
         initComponents();
+        f3= new Turno();
     }
 
     /**
@@ -50,6 +44,11 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("GIOCA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("jLabel1");
 
@@ -169,6 +168,11 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        f3.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
