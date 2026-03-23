@@ -4,6 +4,11 @@
  */
 package mondoincantato;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
 /**
  *
  * @author trivella.augusto
@@ -17,9 +22,52 @@ public class Avvio extends javax.swing.JFrame {
      */
     private SchermataIniziale f1;
     public Avvio() {
+        this.setUndecorated(true);
         f1= new SchermataIniziale();
         initComponents();
+        configuraSchermataPersonalizzata();
     }
+   private void configuraSchermataPersonalizzata() {
+
+    Dimension dimSchermo = Toolkit.getDefaultToolkit().getScreenSize();
+    int w = dimSchermo.width;
+    int h = dimSchermo.height;
+
+
+    ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/mondoincantato/sfondo_avvio_fullscreen.png"));
+    java.awt.Image imgScalata = iconaOriginale.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
+    jLabel1.setIcon(new ImageIcon(imgScalata));
+
+
+    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    this.setSize(w, h);
+    
+
+    jPanel1.setLayout(null);
+    this.setContentPane(jPanel1);
+    jLabel1.setBounds(0, 0, w, h);
+
+    int btnW = (int)(w * 0.18); 
+    int btnH = (int)(h * 0.12); 
+    
+    int btnX = (w / 2) - (btnW / 2);
+    
+    int btnY = (int)(h * 0.79); 
+
+    cambioPag.setBounds(btnX, btnY, btnW, btnH);
+    
+    cambioPag.setOpaque(false);
+    cambioPag.setContentAreaFilled(false);
+    cambioPag.setBorderPainted(false);
+    cambioPag.setText(""); 
+    cambioPag.setFocusPainted(false);
+
+    jPanel1.add(cambioPag);
+    jPanel1.add(jLabel1);  
+    
+    jPanel1.revalidate();
+    jPanel1.repaint();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,30 +101,29 @@ public class Avvio extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/avvio.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/sfondo_avvio.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(cambioPag)
-                        .addGap(76, 76, 76))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(96, 96, 96))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cambioPag)
+                .addGap(1100, 1100, 1100))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(44, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(82, 82, 82))
         );
 
         pack();
