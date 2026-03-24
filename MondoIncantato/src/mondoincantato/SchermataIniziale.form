@@ -64,15 +64,12 @@
                       <Component id="difNormale" min="-2" pref="31" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="difDemone" min="-2" pref="31" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="276" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLabel2" min="-2" pref="95" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
-                      <Component id="cambioPag" min="-2" pref="94" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel2" alignment="1" min="-2" pref="108" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
+              <Component id="cambioPag" min="-2" pref="94" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -1,31 +1,94 @@
 
 package mondoincantato;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-/**
- *
- * @author TRIVELLA.AUGUSTO
- */
 public class SchermataIniziale extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SchermataIniziale.class.getName());
 
-    /**
-     * Creates new form SchermataIniziale
-     */
     private Gestore g;
     private SceltaPersonaggio f2;
+    private JLabel jLabelSfondo;
+
     public SchermataIniziale() {
-        initComponents();
+        // 1. Togliamo i bordi di Windows
+        this.setUndecorated(true); 
+        
+        // 2. CREIAMO I COMPONENTI (Fondamentale farlo per primo!)
+        initComponents(); 
+        
+        // 3. Inizializziamo la tua logica
         f2 = new SceltaPersonaggio();
         g = new Gestore(false);
-        jLabel2.setText("Ti hanno rinchiuso in una capsula con la forza,\n ti sei svegliato in un mondo a se stante.\n Sei sconvolto, ma devi prendere una scelta in base alla difficoltà che scieglierai la tua vita sarà più semplice o più complicata. \n Nella prossima schermata ti verrà data la possibilità di scegliere il tuo eroe, buona foruna");
+        
+        // 4. Solo ORA che tutto esiste, configuriamo la grafica
+        configuraSchermataFullscreen(); 
     }
 
+    private void configuraSchermataFullscreen() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        int w = dim.width;
+        int h = dim.height;
+
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setSize(w, h);
+        
+        JPanel mainPanel = (JPanel)this.getContentPane();
+        mainPanel.setLayout(null);
+        mainPanel.setBackground(Color.BLACK);
+
+        // --- CONTROLLO DI SICUREZZA ---
+        // Se vedi questo messaggio in console, significa che il nome nel Design è diverso!
+        if (difNormale == null || difDemone == null || cambioPag == null || jLabel2 == null) {
+            System.err.println("ERRORE: Uno dei componenti è NULL. Controlla i nomi nel Design!");
+            return; 
+        }
+
+        // --- POSIZIONAMENTO ---
+        jLabel2.setBounds((int)(w*0.25), (int)(h*0.2), (int)(w*0.5), (int)(h*0.4));
+        difNormale.setBounds((int)(w*0.8), (int)(h*0.35), 180, 50);
+        difDemone.setBounds((int)(w*0.8), (int)(h*0.45), 180, 50);
+        cambioPag.setBounds((int)(w*0.4), (int)(h*0.8), 250, 80);
+
+        // --- SFONDO ---
+        try {
+            java.net.URL imgURL = getClass().getResource("/mondoincantato/sfondo_storia_fullscreen.png");
+            if (imgURL != null) {
+                ImageIcon icona = new ImageIcon(imgURL);
+                Image img = icona.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+                jLabelSfondo = new JLabel(new ImageIcon(img));
+                jLabelSfondo.setBounds(0, 0, w, h);
+            } else {
+                System.err.println("File immagine non trovato! Controlla il nome del file .png");
+            }
+        } catch (Exception e) {
+            System.err.println("Errore caricamento immagine: " + e.getMessage());
+        }
+
+        // --- AGGIUNTA ORDINATA ---
+        mainPanel.removeAll();
+        mainPanel.add(jLabel2);
+        mainPanel.add(difNormale);
+        mainPanel.add(difDemone);
+        mainPanel.add(cambioPag);
+        
+        // Aggiungiamo lo sfondo solo se è stato creato correttamente
+        if (jLabelSfondo != null) {
+            mainPanel.add(jLabelSfondo);
+        }
+
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,13 +175,11 @@ public class SchermataIniziale extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(difNormale, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
-                        .addComponent(difDemone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(276, 276, 276))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(173, 173, 173)
-                        .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))))
+                        .addComponent(difDemone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(160, 160, 160)
+                .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         pack();

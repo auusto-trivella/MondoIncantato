@@ -34,7 +34,7 @@ public class Avvio extends javax.swing.JFrame {
     int h = dimSchermo.height;
 
 
-    ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/mondoincantato/sfondo_avvio_fullscreen.png"));
+    ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/mondoincantato/sfondo_avvio.png"));
     java.awt.Image imgScalata = iconaOriginale.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
     jLabel1.setIcon(new ImageIcon(imgScalata));
 
