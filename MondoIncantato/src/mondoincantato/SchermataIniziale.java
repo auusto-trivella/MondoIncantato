@@ -1,93 +1,86 @@
 
 package mondoincantato;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.Image;
+import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.JButton;
 
 public class SchermataIniziale extends javax.swing.JFrame {
 
     private Gestore g;
     private SceltaPersonaggio f2;
-    private JLabel jLabelSfondo;
 
     public SchermataIniziale() {
-        // 1. Togliamo i bordi di Windows
-        this.setUndecorated(true); 
-        
-        // 2. CREIAMO I COMPONENTI (Fondamentale farlo per primo!)
-        initComponents(); 
-        
-        // 3. Inizializziamo la tua logica
+        this.setUndecorated(true);
+        initComponents();
         f2 = new SceltaPersonaggio();
         g = new Gestore(false);
-        
-        // 4. Solo ORA che tutto esiste, configuriamo la grafica
-        configuraSchermataFullscreen(); 
+        configuraSchermataStoria();
     }
 
-    private void configuraSchermataFullscreen() {
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int w = dim.width;
-        int h = dim.height;
+    private void configuraSchermataStoria() {
+        // 1. Dimensioni Schermo
+        Dimension dimSchermo = Toolkit.getDefaultToolkit().getScreenSize();
+        int w = dimSchermo.width;
+        int h = dimSchermo.height;
 
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setSize(w, h);
+
+        // 2. Setup Pannello (Null Layout)
+        jPanel1.setLayout(null);
+        this.setContentPane(jPanel1);
+
+        // 3. Immagine di Sfondo (Statico con tutto disegnato sopra)
+        // Assicurati che il file si chiami esattamente cosi nella cartella mondoincantato
+        ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/mondoincantato/sfondoStoria.png"));
+        Image imgScalata = iconaOriginale.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        jLabelSfondo.setIcon(new ImageIcon(imgScalata));
+        jLabelSfondo.setBounds(0, 0, w, h);
+
         
-        JPanel mainPanel = (JPanel)this.getContentPane();
-        mainPanel.setLayout(null);
-        mainPanel.setBackground(Color.BLACK);
+        // --- BOTTONE NORMALE (VERDE) ---
+int normW = (int)(w * 0.22); // Leggermente più largo per sicurezza
+int normH = (int)(h * 0.15);
+int normX = (int)(w * 0.70); // Un po' più a sinistra rispetto a prima
+int normY = (int)(h * 0.27); // Posizione del tasto superiore
+configuraBottoneInvisibile(difNormale, normX, normY, normW, normH);
 
-        // --- CONTROLLO DI SICUREZZA ---
-        // Se vedi questo messaggio in console, significa che il nome nel Design è diverso!
-        if (difNormale == null || difDemone == null || cambioPag == null || jLabel2 == null) {
-            System.err.println("ERRORE: Uno dei componenti è NULL. Controlla i nomi nel Design!");
-            return; 
-        }
+// --- BOTTONE DEMONE (ROSSO) ---
+int demoW = (int)(w * 0.22);
+int demoH = (int)(h * 0.15);
+int demoX = (int)(w * 0.70); 
+int demoY = (int)(h * 0.60); // Posizione del tasto inferiore
+configuraBottoneInvisibile(difDemone, demoX, demoY, demoW, demoH);
 
-        // --- POSIZIONAMENTO ---
-        jLabel2.setBounds((int)(w*0.25), (int)(h*0.2), (int)(w*0.5), (int)(h*0.4));
-        difNormale.setBounds((int)(w*0.8), (int)(h*0.35), 180, 50);
-        difDemone.setBounds((int)(w*0.8), (int)(h*0.45), 180, 50);
-        cambioPag.setBounds((int)(w*0.4), (int)(h*0.8), 250, 80);
+        // --- BOTTONE INIZIA IL VIAGGIO (NEXT) ---
+        int nextW = (int)(w * 0.28);
+        int nextH = (int)(h * 0.12);
+        int nextX = (w / 2) - (nextW / 2); // Al centro in basso
+        int nextY = (int)(h * 0.83);
+        configuraBottoneInvisibile(cambioPag, nextX, nextY, nextW, nextH);
 
-        // --- SFONDO ---
-        try {
-            java.net.URL imgURL = getClass().getResource("/mondoincantato/sfondo_storia_fullscreen.png");
-            if (imgURL != null) {
-                ImageIcon icona = new ImageIcon(imgURL);
-                Image img = icona.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-                jLabelSfondo = new JLabel(new ImageIcon(img));
-                jLabelSfondo.setBounds(0, 0, w, h);
-            } else {
-                System.err.println("File immagine non trovato! Controlla il nome del file .png");
-            }
-        } catch (Exception e) {
-            System.err.println("Errore caricamento immagine: " + e.getMessage());
-        }
+        // 5. Aggiunta al pannello (L'ordine è fondamentale: bottoni sopra, sfondo sotto)
+        jPanel1.add(difNormale);
+        jPanel1.add(difDemone);
+        jPanel1.add(cambioPag);
+        jPanel1.add(jLabelSfondo); 
 
-        // --- AGGIUNTA ORDINATA ---
-        mainPanel.removeAll();
-        mainPanel.add(jLabel2);
-        mainPanel.add(difNormale);
-        mainPanel.add(difDemone);
-        mainPanel.add(cambioPag);
-        
-        // Aggiungiamo lo sfondo solo se è stato creato correttamente
-        if (jLabelSfondo != null) {
-            mainPanel.add(jLabelSfondo);
-        }
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }
 
-        mainPanel.revalidate();
-        mainPanel.repaint();
+    // Metodo per rendere i bottoni invisibili ma cliccabili (come in Avvio)
+    private void configuraBottoneInvisibile(JButton b, int x, int y, int w, int h) {
+        b.setBounds(x, y, w, h);
+        b.setContentAreaFilled(false);
+        b.setBorderPainted(false);
+        b.setText(""); 
+        b.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,6 +97,8 @@ public class SchermataIniziale extends javax.swing.JFrame {
         difNormale = new javax.swing.JButton();
         difDemone = new javax.swing.JButton();
         cambioPag = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelSfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,6 +134,20 @@ public class SchermataIniziale extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/sfondoStoria.png"))); // NOI18N
+        jLabelSfondo.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,12 +165,19 @@ public class SchermataIniziale extends javax.swing.JFrame {
                         .addGap(87, 87, 87)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(difDemone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(difNormale, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
+                            .addComponent(difNormale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(80, 80, 80))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(311, 311, 311)
-                .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(311, 311, 311)
+                        .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(jLabelSfondo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(93, 93, 93))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,15 +186,22 @@ public class SchermataIniziale extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(difNormale, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(difDemone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(160, 160, 160)
-                .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelSfondo)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(22, 22, 22))
         );
 
@@ -186,11 +209,20 @@ public class SchermataIniziale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void difNormaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difNormaleActionPerformed
-        g.setMod(false);
+        difNormale.setBorderPainted(true);
+    difNormale.setBorder(javax.swing.BorderFactory.createLineBorder(Color.GREEN, 3));
+    
+    // Qui metti la tua logica di gioco
+    System.out.println("Difficoltà Normale selezionata!");
+    g.setMod(false);
     }//GEN-LAST:event_difNormaleActionPerformed
 
     private void difDemoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difDemoneActionPerformed
-        g.setMod(true);
+        difDemone.setBorderPainted(true);
+    difDemone.setBorder(javax.swing.BorderFactory.createLineBorder(Color.RED, 3));
+    
+    System.out.println("Difficoltà Demone selezionata!");
+    g.setMod(true);
     }//GEN-LAST:event_difDemoneActionPerformed
 
     private void cambioPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioPagActionPerformed
@@ -215,7 +247,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
                 }
             }
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SchermataIniziale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -230,5 +262,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelSfondo;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

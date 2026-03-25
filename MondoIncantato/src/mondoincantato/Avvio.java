@@ -56,11 +56,9 @@ public class Avvio extends javax.swing.JFrame {
 
     cambioPag.setBounds(btnX, btnY, btnW, btnH);
     
-    cambioPag.setOpaque(false);
     cambioPag.setContentAreaFilled(false);
     cambioPag.setBorderPainted(false);
     cambioPag.setText(""); 
-    cambioPag.setFocusPainted(false);
 
     jPanel1.add(cambioPag);
     jPanel1.add(jLabel1);  
