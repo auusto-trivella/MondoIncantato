@@ -13,11 +13,11 @@ public class SchermataIniziale extends javax.swing.JFrame {
 
     private Gestore g;
     private SceltaPersonaggio f2;
+    private boolean isDemoneSelezionato = false;
 
     public SchermataIniziale() {
         this.setUndecorated(true);
         initComponents();
-        f2 = new SceltaPersonaggio();
         g = new Gestore(false);
         configuraSchermataStoria();
     }
@@ -42,33 +42,32 @@ public class SchermataIniziale extends javax.swing.JFrame {
         jLabelSfondo.setIcon(new ImageIcon(imgScalata));
         jLabelSfondo.setBounds(0, 0, w, h);
 
-        
         // --- BOTTONE NORMALE (VERDE) ---
-int normW = (int)(w * 0.22); // Leggermente più largo per sicurezza
-int normH = (int)(h * 0.15);
-int normX = (int)(w * 0.70); // Un po' più a sinistra rispetto a prima
-int normY = (int)(h * 0.27); // Posizione del tasto superiore
-configuraBottoneInvisibile(difNormale, normX, normY, normW, normH);
+        int normW = (int) (w * 0.22); // Leggermente più largo per sicurezza
+        int normH = (int) (h * 0.15);
+        int normX = (int) (w * 0.70); // Un po' più a sinistra rispetto a prima
+        int normY = (int) (h * 0.27); // Posizione del tasto superiore
+        configuraBottoneInvisibile(difNormale, normX, normY, normW, normH);
 
 // --- BOTTONE DEMONE (ROSSO) ---
-int demoW = (int)(w * 0.22);
-int demoH = (int)(h * 0.15);
-int demoX = (int)(w * 0.70); 
-int demoY = (int)(h * 0.60); // Posizione del tasto inferiore
-configuraBottoneInvisibile(difDemone, demoX, demoY, demoW, demoH);
+        int demoW = (int) (w * 0.22);
+        int demoH = (int) (h * 0.15);
+        int demoX = (int) (w * 0.70);
+        int demoY = (int) (h * 0.60); // Posizione del tasto inferiore
+        configuraBottoneInvisibile(difDemone, demoX, demoY, demoW, demoH);
 
         // --- BOTTONE INIZIA IL VIAGGIO (NEXT) ---
-        int nextW = (int)(w * 0.28);
-        int nextH = (int)(h * 0.12);
+        int nextW = (int) (w * 0.28);
+        int nextH = (int) (h * 0.12);
         int nextX = (w / 2) - (nextW / 2); // Al centro in basso
-        int nextY = (int)(h * 0.83);
+        int nextY = (int) (h * 0.83);
         configuraBottoneInvisibile(cambioPag, nextX, nextY, nextW, nextH);
 
         // 5. Aggiunta al pannello (L'ordine è fondamentale: bottoni sopra, sfondo sotto)
         jPanel1.add(difNormale);
         jPanel1.add(difDemone);
         jPanel1.add(cambioPag);
-        jPanel1.add(jLabelSfondo); 
+        jPanel1.add(jLabelSfondo);
 
         jPanel1.revalidate();
         jPanel1.repaint();
@@ -79,9 +78,10 @@ configuraBottoneInvisibile(difDemone, demoX, demoY, demoW, demoH);
         b.setBounds(x, y, w, h);
         b.setContentAreaFilled(false);
         b.setBorderPainted(false);
-        b.setText(""); 
+        b.setText("");
         b.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -210,22 +210,24 @@ configuraBottoneInvisibile(difDemone, demoX, demoY, demoW, demoH);
 
     private void difNormaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difNormaleActionPerformed
         difNormale.setBorderPainted(true);
-    difNormale.setBorder(javax.swing.BorderFactory.createLineBorder(Color.GREEN, 3));
-    
-    // Qui metti la tua logica di gioco
-    System.out.println("Difficoltà Normale selezionata!");
-    g.setMod(false);
+        difNormale.setBorder(javax.swing.BorderFactory.createLineBorder(Color.GREEN, 3));
+
+        // Qui metti la tua logica di gioco
+        System.out.println("Difficoltà Normale selezionata!");
+        g.setMod(false);
     }//GEN-LAST:event_difNormaleActionPerformed
 
     private void difDemoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difDemoneActionPerformed
         difDemone.setBorderPainted(true);
-    difDemone.setBorder(javax.swing.BorderFactory.createLineBorder(Color.RED, 3));
-    
-    System.out.println("Difficoltà Demone selezionata!");
-    g.setMod(true);
+        difDemone.setBorder(javax.swing.BorderFactory.createLineBorder(Color.RED, 3));
+
+        System.out.println("Difficoltà Demone selezionata!");
+        g.setMod(true);
+        isDemoneSelezionato = true;
     }//GEN-LAST:event_difDemoneActionPerformed
 
     private void cambioPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioPagActionPerformed
+        SceltaPersonaggio f2 = new SceltaPersonaggio(isDemoneSelezionato);
         f2.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_cambioPagActionPerformed

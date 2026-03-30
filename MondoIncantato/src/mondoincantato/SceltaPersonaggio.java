@@ -14,51 +14,65 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SceltaPersonaggio extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SceltaPersonaggio.class.getName());
 
     /**
      * Creates new form SceltaPersonaggio
      */
+private boolean modalitaDemone;
     private JLabel eroeSelezionato = null;
     private Turno f3;
-    public SceltaPersonaggio() {
-    this.setUndecorated(true); // Togliamo i bordi
-    initComponents();
-    this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Fullscreen
-    f3 = new Turno();
-    organizzaLayoutEroi(); // Il metodo magico che crea l'ordine
-}
-    private void organizzaLayoutEroi() {
+
+    public SceltaPersonaggio(boolean sceltaArrivata) { 
+        this.modalitaDemone = sceltaArrivata; 
+
+        this.setUndecorated(true); 
+        initComponents(); 
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); 
+        
+        f3 = new Turno();
+        
+        // Puliamo il contenuto generato da NetBeans e mettiamo il nostro
+        organizzaLayoutEroi(this.modalitaDemone);
+    }
+
+    private void organizzaLayoutEroi(boolean escludiFizzle) {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         int w = dim.width;
         int h = dim.height;
 
         java.awt.Container content = this.getContentPane();
+        content.removeAll(); // SVUOTA tutto il vecchio layout di NetBeans
         content.setLayout(new java.awt.BorderLayout());
-        content.setBackground(new Color(20, 20, 20)); // Sfondo scuro professionale
+        content.setBackground(new Color(20, 20, 20));
 
-        // Pannello Centrale per i 4 Eroi
-        JPanel panelEroi = new JPanel(new java.awt.GridLayout(1, 4, 10, 0));
+        // Decidiamo il numero di colonne
+        int numeroEroi = escludiFizzle ? 3 : 4;
+        JPanel panelEroi = new JPanel(new java.awt.GridLayout(1, numeroEroi, 10, 0));
         panelEroi.setOpaque(false);
 
-        // Dimensioni grandi: 75% dell'altezza schermo
-        int imgW = w / 4; 
-        int imgH = (int)(h * 0.75);
+        int imgW = w / numeroEroi;
+        int imgH = (int) (h * 0.75);
 
-        // Configura interazione e ridimensionamento per ogni JLabel
+        // Configura il ridimensionamento (chiamiamo il metodo per ogni JLabel)
         configuraInterazioneEroe(jLabel1, imgW, imgH); // Korg
         configuraInterazioneEroe(jLabel4, imgW, imgH); // Lirael
-        configuraInterazioneEroe(jLabel3, imgW, imgH); // Fizzle
         configuraInterazioneEroe(jLabel2, imgW, imgH); // Aster
+        if (!escludiFizzle) {
+            configuraInterazioneEroe(jLabel3, imgW, imgH); // Fizzle
+        }
 
-        // Aggiunge le colonne create dinamicamente
-        panelEroi.add(creaColonnaEroe(jLabel1, jLabel5, jLabel6));
-        panelEroi.add(creaColonnaEroe(jLabel4, jLabel7, jLabel8));
-        panelEroi.add(creaColonnaEroe(jLabel3, jLabel12, jLabel13));
-        panelEroi.add(creaColonnaEroe(jLabel2, jLabel10, jLabel11));
+        // AGGIUNTA DEI PERSONAGGI (Una sola volta!)
+        panelEroi.add(creaColonnaEroe(jLabel1, jLabel5, jLabel6));   // Korg
+        panelEroi.add(creaColonnaEroe(jLabel4, jLabel7, jLabel8));   // Lirael
+        panelEroi.add(creaColonnaEroe(jLabel2, jLabel10, jLabel11)); // Aster
 
-        // Pannello per il tasto GIOCA in basso
+        if (!escludiFizzle) {
+            panelEroi.add(creaColonnaEroe(jLabel3, jLabel12, jLabel13)); // Fizzle
+        }
+
+        // Pannello Basso (Pulsante GIOCA)
         JPanel panelBasso = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 40));
         panelBasso.setOpaque(false);
         jButton1.setPreferredSize(new Dimension(w / 4, 70));
@@ -67,9 +81,9 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
 
         content.add(panelEroi, java.awt.BorderLayout.CENTER);
         content.add(panelBasso, java.awt.BorderLayout.SOUTH);
-        
-        this.revalidate();
-        this.repaint();
+
+        content.revalidate();
+        content.repaint();
     }
 
     private void configuraInterazioneEroe(JLabel label, int maxW, int maxH) {
@@ -85,8 +99,8 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
 
             label.setIcon(new ImageIcon(iconaOriginale.getImage().getScaledInstance(newW, newH, java.awt.Image.SCALE_SMOOTH)));
         }
-        label.setText(""); 
-        label.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0), 5)); // Bordo vuoto
+        label.setText("");
+        label.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0), 5)); // Bordo vuoto
 
         // 2. LOGICA DI SELEZIONE CLICCABILE
         label.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -94,7 +108,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 // Deseleziona il vecchio
                 if (eroeSelezionato != null) {
-                    eroeSelezionato.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0), 5));
+                    eroeSelezionato.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0), 5));
                 }
                 // Seleziona il nuovo (Bordo Arancione)
                 eroeSelezionato = label;
@@ -111,7 +125,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 if (label != eroeSelezionato) {
-                    label.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,0), 5));
+                    label.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0), 5));
                 }
             }
         });
@@ -126,7 +140,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         nome.setFont(new java.awt.Font("Verdana", java.awt.Font.BOLD, 30));
         bonus.setForeground(new Color(200, 200, 200));
         bonus.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 20));
-        
+
         img.setAlignmentX(Component.CENTER_ALIGNMENT);
         nome.setAlignmentX(Component.CENTER_ALIGNMENT);
         bonus.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -137,7 +151,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         p.add(nome);
         p.add(bonus);
         p.add(javax.swing.Box.createVerticalGlue());
-        
+
         return p;
     }
 
@@ -324,7 +338,10 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SceltaPersonaggio().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+        // AGGIUNGIAMO 'false' tra le parentesi per non dare errore
+        new SceltaPersonaggio(false).setVisible(true); 
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
