@@ -37,7 +37,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
 
         // 3. Immagine di Sfondo (Statico con tutto disegnato sopra)
         // Assicurati che il file si chiami esattamente cosi nella cartella mondoincantato
-        ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/mondoincantato/sfondoStoria.png"));
+        ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/mondoincantato/sfondo-mod.png"));
         Image imgScalata = iconaOriginale.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         jLabelSfondo.setIcon(new ImageIcon(imgScalata));
         jLabelSfondo.setBounds(0, 0, w, h);
@@ -145,7 +145,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/sfondoStoria.png"))); // NOI18N
+        jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/sfondo-mod.png"))); // NOI18N
         jLabelSfondo.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,6 +215,9 @@ public class SchermataIniziale extends javax.swing.JFrame {
         // Qui metti la tua logica di gioco
         System.out.println("Difficoltà Normale selezionata!");
         g.setMod(false);
+        SceltaPersonaggio f2 = new SceltaPersonaggio(isDemoneSelezionato);
+        f2.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_difNormaleActionPerformed
 
     private void difDemoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difDemoneActionPerformed
@@ -224,12 +227,13 @@ public class SchermataIniziale extends javax.swing.JFrame {
         System.out.println("Difficoltà Demone selezionata!");
         g.setMod(true);
         isDemoneSelezionato = true;
-    }//GEN-LAST:event_difDemoneActionPerformed
-
-    private void cambioPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioPagActionPerformed
         SceltaPersonaggio f2 = new SceltaPersonaggio(isDemoneSelezionato);
         f2.setVisible(true);
         this.dispose();
+    }//GEN-LAST:event_difDemoneActionPerformed
+
+    private void cambioPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioPagActionPerformed
+        
     }//GEN-LAST:event_cambioPagActionPerformed
 
     /**
