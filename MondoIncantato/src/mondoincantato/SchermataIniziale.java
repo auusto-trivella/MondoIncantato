@@ -56,17 +56,10 @@ public class SchermataIniziale extends javax.swing.JFrame {
         int demoY = (int) (h * 0.60); // Posizione del tasto inferiore
         configuraBottoneInvisibile(difDemone, demoX, demoY, demoW, demoH);
 
-        // --- BOTTONE INIZIA IL VIAGGIO (NEXT) ---
-        int nextW = (int) (w * 0.28);
-        int nextH = (int) (h * 0.12);
-        int nextX = (w / 2) - (nextW / 2); // Al centro in basso
-        int nextY = (int) (h * 0.83);
-        configuraBottoneInvisibile(cambioPag, nextX, nextY, nextW, nextH);
 
         // 5. Aggiunta al pannello (L'ordine è fondamentale: bottoni sopra, sfondo sotto)
         jPanel1.add(difNormale);
         jPanel1.add(difDemone);
-        jPanel1.add(cambioPag);
         jPanel1.add(jLabelSfondo);
 
         jPanel1.revalidate();
@@ -96,7 +89,6 @@ public class SchermataIniziale extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         difNormale = new javax.swing.JButton();
         difDemone = new javax.swing.JButton();
-        cambioPag = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabelSfondo = new javax.swing.JLabel();
 
@@ -123,14 +115,6 @@ public class SchermataIniziale extends javax.swing.JFrame {
         difDemone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 difDemoneActionPerformed(evt);
-            }
-        });
-
-        cambioPag.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
-        cambioPag.setText("NEXT");
-        cambioPag.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cambioPagActionPerformed(evt);
             }
         });
 
@@ -168,13 +152,8 @@ public class SchermataIniziale extends javax.swing.JFrame {
                             .addComponent(difNormale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(80, 80, 80))))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(311, 311, 311)
-                        .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(jLabelSfondo)))
+                .addGap(151, 151, 151)
+                .addComponent(jLabelSfondo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93))
@@ -193,15 +172,10 @@ public class SchermataIniziale extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addComponent(difDemone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(cambioPag, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelSfondo)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabelSfondo)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
 
@@ -232,10 +206,6 @@ public class SchermataIniziale extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_difDemoneActionPerformed
 
-    private void cambioPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioPagActionPerformed
-        
-    }//GEN-LAST:event_cambioPagActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -262,7 +232,6 @@ public class SchermataIniziale extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cambioPag;
     private javax.swing.JButton difDemone;
     private javax.swing.JButton difNormale;
     private javax.swing.JLabel jLabel1;
