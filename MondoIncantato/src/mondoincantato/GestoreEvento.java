@@ -90,10 +90,10 @@ public class GestoreEvento {
                 int eventoBad = random.nextInt(2); 
             
                 if(eventoBad==0){//SICCITA'
-                    eroe.setSete(eroe.getSete()+22);
+                    eroe.setSete(eroe.getSete()+20);
                 }
                 else{//DISSENTERIA
-                    eroe.setFame(eroe.getFame()+12);
+                    eroe.setFame(eroe.getFame()+10);
                 }
             }
         }
@@ -102,10 +102,10 @@ public class GestoreEvento {
                 int eventoBad = random.nextInt(2); 
             
                 if(eventoBad==0){//SICCITA'
-                    eroe.setSete(eroe.getSete()+20);
+                    eroe.setSete(eroe.getSete()+22);
                 }
                 else{//DISSENTERIA
-                    eroe.setFame(eroe.getFame()+10);
+                    eroe.setFame(eroe.getFame()+12);
                 }
             }
         }

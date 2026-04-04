@@ -13,7 +13,7 @@ import java.util.Random;
 public class Gestore {
     private int nPersonaggio;
     private boolean modalityDemon;
-    private Eroe eroe= new Eroe("nessuno",false,0,0,0,false);
+    private Eroe eroeSelezionato= new Eroe("nessuno",false,0,0,0,false);
     Random rand= new Random();
 
     public Gestore( boolean modalityDemon) {
@@ -38,24 +38,39 @@ public class Gestore {
         modalityDemon=val;
     }
     
-    public void sceltaPersonaggio(Eroe eroe) { 
+    public Eroe sceltaPersonaggio() { 
     
         if (modalityDemon == false) {
-        
-            if (nPersonaggio == 1) { // GNOMO
-                eroe = new Eroe("FIZZLE",false,50,-30,-30,false);
-            } 
-        }    
-            else if (nPersonaggio == 2) { // ORCO
-                eroe = new Eroe("KORG",false,100,-20,0,false);
-            } 
-            else if (nPersonaggio == 3) { // ELFO
-                eroe = new Eroe("LIRAEL",false,70,0,0,false);
-            } 
-            else { //MINOTAURO
-                eroe = new Eroe("ASTER",false,110,0,-20,false);
-            }
-         
+            
+        if (nPersonaggio == 1) { // GNOMO
+            eroeSelezionato = new Eroe("FIZZLE", false, 50, -30, -30, true);
+        } 
+        else if (nPersonaggio == 2) { // ORCO
+            eroeSelezionato = new Eroe("KORG", false, 100, -20, 0, false);
+        } 
+        else if (nPersonaggio == 3) { // ELFO
+            eroeSelezionato = new Eroe("LIRAEL", false, 70, 0, 0, false);
+        } 
+        else if (nPersonaggio == 4) { // MINOTAURO
+            eroeSelezionato = new Eroe("ASTER", false, 110, 0, -20, false);
+        }
+    } 
+    else { 
+        if (nPersonaggio == 2) {
+            eroeSelezionato = new Eroe("KORG", false, 100, -20, 0, false);
+        } 
+        else if (nPersonaggio == 3) {
+            eroeSelezionato = new Eroe("LIRAEL", false, 70, 0, 0, false);
+        } 
+        else {
+            eroeSelezionato = new Eroe("ASTER", false, 110, 0, -20, false);
+        }
+    }
+         return eroeSelezionato;
+    }
+    
+    public void setnPersonaggio(int n) {
+        this.nPersonaggio = n;
     }
     
     public boolean abilitySpecial(boolean ability){
@@ -81,7 +96,7 @@ public class Gestore {
                 }
             }
             else if(nome.contains("LIRAEL")){
-                eroe.setVita(eroe.getVita()+60);
+                eroeSelezionato.setVita(eroeSelezionato.getVita()+60);
             }
             else{
                 for(int i=0;i<2;i++){

@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class SceltaPersonaggio extends javax.swing.JFrame {
@@ -23,6 +24,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
 private boolean modalitaDemone;
     private JLabel eroeSelezionato = null;
     private Turno f3;
+    private Eroe eroe;
 
     public SceltaPersonaggio(boolean sceltaArrivata) { 
         this.modalitaDemone = sceltaArrivata; 
@@ -31,6 +33,7 @@ private boolean modalitaDemone;
         initComponents(); 
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); 
         
+        eroe= new Eroe("nessuno",false,0,0,0,false);
         f3 = new Turno();
         
         // Puliamo il contenuto generato da NetBeans e mettiamo il nostro
@@ -43,11 +46,10 @@ private boolean modalitaDemone;
         int h = dim.height;
 
         java.awt.Container content = this.getContentPane();
-        content.removeAll(); // SVUOTA tutto il vecchio layout di NetBeans
+        content.removeAll(); 
         content.setLayout(new java.awt.BorderLayout());
         content.setBackground(new Color(20, 20, 20));
 
-        // Decidiamo il numero di colonne
         int numeroEroi = escludiFizzle ? 3 : 4;
         JPanel panelEroi = new JPanel(new java.awt.GridLayout(1, numeroEroi, 10, 0));
         panelEroi.setOpaque(false);
@@ -55,24 +57,22 @@ private boolean modalitaDemone;
         int imgW = w / numeroEroi;
         int imgH = (int) (h * 0.75);
 
-        // Configura il ridimensionamento (chiamiamo il metodo per ogni JLabel)
-        configuraInterazioneEroe(jLabel1, imgW, imgH); // Korg
-        configuraInterazioneEroe(jLabel4, imgW, imgH); // Lirael
-        configuraInterazioneEroe(jLabel2, imgW, imgH); // Aster
+        // Configura il ridimensionamento e i click
+        configuraInterazioneEroe(KORG, imgW, imgH);
+        configuraInterazioneEroe(LIRAEL, imgW, imgH);
+        configuraInterazioneEroe(ASTER, imgW, imgH);
         if (!escludiFizzle) {
-            configuraInterazioneEroe(jLabel3, imgW, imgH); // Fizzle
+            configuraInterazioneEroe(FIZZLE, imgW, imgH);
         }
 
-        // AGGIUNTA DEI PERSONAGGI (Una sola volta!)
-        panelEroi.add(creaColonnaEroe(jLabel1, jLabel5, jLabel6));   // Korg
-        panelEroi.add(creaColonnaEroe(jLabel4, jLabel7, jLabel8));   // Lirael
-        panelEroi.add(creaColonnaEroe(jLabel2, jLabel10, jLabel11)); // Aster
+        panelEroi.add(creaColonnaEroe(KORG, jLabel5, jLabel6));
+        panelEroi.add(creaColonnaEroe(LIRAEL, jLabel7, jLabel8));
+        panelEroi.add(creaColonnaEroe(ASTER, jLabel10, jLabel11));
 
         if (!escludiFizzle) {
-            panelEroi.add(creaColonnaEroe(jLabel3, jLabel12, jLabel13)); // Fizzle
+            panelEroi.add(creaColonnaEroe(FIZZLE, jLabel12, jLabel13));
         }
 
-        // Pannello Basso (Pulsante GIOCA)
         JPanel panelBasso = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 40));
         panelBasso.setOpaque(false);
         jButton1.setPreferredSize(new Dimension(w / 4, 70));
@@ -165,10 +165,10 @@ private boolean modalitaDemone;
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        KORG = new javax.swing.JLabel();
+        ASTER = new javax.swing.JLabel();
+        FIZZLE = new javax.swing.JLabel();
+        LIRAEL = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -188,17 +188,17 @@ private boolean modalitaDemone;
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/korg.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
+        KORG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/korg.png"))); // NOI18N
+        KORG.setText("jLabel1");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/aster.png"))); // NOI18N
-        jLabel2.setText("jLabel1");
+        ASTER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/aster.png"))); // NOI18N
+        ASTER.setText("jLabel1");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/fizzle.png"))); // NOI18N
-        jLabel3.setText("jLabel1");
+        FIZZLE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/fizzle.png"))); // NOI18N
+        FIZZLE.setText("jLabel1");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/lirael.png"))); // NOI18N
-        jLabel4.setText("jLabel1");
+        LIRAEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/lirael.png"))); // NOI18N
+        LIRAEL.setText("jLabel1");
 
         jLabel5.setText("KORG");
 
@@ -224,7 +224,7 @@ private boolean modalitaDemone;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(KORG, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 409, Short.MAX_VALUE)
@@ -233,14 +233,14 @@ private boolean modalitaDemone;
                                 .addComponent(jLabel11)
                                 .addComponent(jLabel10))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ASTER, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24)))
                         .addGap(78, 78, 78))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(LIRAEL, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FIZZLE, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
@@ -273,8 +273,8 @@ private boolean modalitaDemone;
                     .addGroup(layout.createSequentialGroup()
                         .addGap(150, 150, 150)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(FIZZLE, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ASTER, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -298,11 +298,11 @@ private boolean modalitaDemone;
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
+                        .addComponent(KORG)
                         .addGap(32, 32, 32))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(113, 113, 113)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(LIRAEL, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -312,8 +312,30 @@ private boolean modalitaDemone;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        f3.setVisible(true);
-        this.dispose();
+if (eroeSelezionato == null) return;
+
+    // 1. Creiamo il gestore
+    Gestore g = new Gestore(this.modalitaDemone);
+
+    // 2. SETTIAMO IL NUMERO (Assicurati che questa riga ci sia!)
+    int n = 0;
+    if (eroeSelezionato == FIZZLE) n = 1;
+    else if (eroeSelezionato == KORG) n = 2;
+    else if (eroeSelezionato == LIRAEL) n = 3;
+    else if (eroeSelezionato == ASTER) n = 4;
+
+    g.setnPersonaggio(n); // <--- Forza il numero nel gestore
+
+    // 3. RECUPERIAMO L'EROE
+    Eroe scelto = g.sceltaPersonaggio(); 
+    
+    // DEBUG VELOCE: Vediamo cosa ha creato il gestore prima di passarlo
+    System.out.println("Il gestore ha creato l'eroe: " + scelto.getNome());
+
+    // 4. PASSIAMO AL TURNO
+    f3.setEroe(scelto);
+    f3.setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -345,15 +367,15 @@ private boolean modalitaDemone;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ASTER;
+    private javax.swing.JLabel FIZZLE;
+    private javax.swing.JLabel KORG;
+    private javax.swing.JLabel LIRAEL;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
