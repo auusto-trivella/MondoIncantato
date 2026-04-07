@@ -4,6 +4,8 @@
  */
 package mondoincantato;
 
+import java.io.IOException;
+
 /**
  *
  * @author TRIVELLA.AUGUSTO
@@ -16,8 +18,8 @@ public class Turno extends javax.swing.JFrame {
      * Creates new form Turno
      */
     private Borsa b;
-    private GestoreEvento ge;
     private Eroe e;
+    private GestoreEvento ge;
     private Gestore g; 
     private int nTurno=0;
     public Turno() {
@@ -25,7 +27,7 @@ public class Turno extends javax.swing.JFrame {
         e= new Eroe("nessuno",false,0,0,0,true);
         ge = new GestoreEvento();
         b= new Borsa();
-        g= new Gestore(false);
+        g= new Gestore(0,false,e,b);
     }
     
     public void setEroe(Eroe nuovoEroe) {
@@ -66,13 +68,18 @@ public class Turno extends javax.swing.JFrame {
     valSete.setText("" + e.getSete());
     }
     
+    
     public void stazEroe() {
 
         valSalute.setText("" + e.getVita());
         valSete.setText("" + e.getSete());
         valFame.setText("" + e.getFame());
-
     }
+
+    public int getnTurno() {
+        return nTurno;
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -88,10 +95,10 @@ public class Turno extends javax.swing.JFrame {
         valSalute = new javax.swing.JLabel();
         valFame = new javax.swing.JLabel();
         valSete = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        saveCsv = new javax.swing.JButton();
+        caricaCsv = new javax.swing.JButton();
+        saveSer = new javax.swing.JButton();
+        caricaSer = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         turno = new javax.swing.JLabel();
         personaggio = new javax.swing.JLabel();
@@ -174,17 +181,27 @@ public class Turno extends javax.swing.JFrame {
         valSete.setText("0");
         getContentPane().add(valSete, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 670, -1, -1));
 
-        jButton1.setText("jButton1");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, -1));
+        saveCsv.setText("SALVA CSV");
+        saveCsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveCsvActionPerformed(evt);
+            }
+        });
+        getContentPane().add(saveCsv, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, -1));
 
-        jButton2.setText("jButton2");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
+        caricaCsv.setText("CARICA CSV");
+        caricaCsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                caricaCsvActionPerformed(evt);
+            }
+        });
+        getContentPane().add(caricaCsv, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
 
-        jButton3.setText("jButton3");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, -1));
+        saveSer.setText("SALVA SER");
+        getContentPane().add(saveSer, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, -1));
 
-        jButton5.setText("jButton5");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, -1, -1));
+        caricaSer.setText("CARICA SER");
+        getContentPane().add(caricaSer, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -200,7 +217,7 @@ public class Turno extends javax.swing.JFrame {
         personaggio.setText("jLabel8");
         getContentPane().add(personaggio, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 180, 474, 352));
 
-        eventiImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/sconfitta.png"))); // NOI18N
+        eventiImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/caricamento.png"))); // NOI18N
         eventiImg.setText("jLabel9");
         getContentPane().add(eventiImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 630, 352));
 
@@ -338,24 +355,45 @@ public class Turno extends javax.swing.JFrame {
 
     private void abilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abilityActionPerformed
         if (e.isAbility()) {
-                g.usaAbility(e, b);
+            g.usaAbility(e, b);
 
-                if (e.getNome().contains("FIZZLE")) {
-                    testoStoria.append("FIZZLE attiva il suo sesto senso! Prossimi ritrovamenti raddoppiati.\n");
-                } else if (e.getNome().contains("KORG")) {
-                    testoStoria.append("KORG ha cacciato: +2 Cibo in borsa!\n");
-                } else if (e.getNome().contains("LIRAEL")) {
-                    testoStoria.append("LIRAEL usa il canto curativo: +60 HP!\n");
-                } else {
-                    testoStoria.append("ASTER ha trovato una fonte: +2 Acqua in borsa!\n");
-                }
-
-                inventario(); // aggiorna le label
-
-        } else {
+            if (e.getNome().contains("FIZZLE")) {
+                testoStoria.append("FIZZLE attiva il suo sesto senso! Prossimi ritrovamenti raddoppiati.\n");
+            } else if (e.getNome().contains("KORG")) {
+                testoStoria.append("KORG ha cacciato: +2 Cibo in borsa!\n");
+            } else if (e.getNome().contains("LIRAEL")) {
+                testoStoria.append("LIRAEL usa il canto curativo: +60 HP!\n");
+            } else {
+                testoStoria.append("ASTER ha trovato una fonte: +2 Acqua in borsa!\n");
+            }
+            inventario(); // aggiorna le label
+        }
+        else {
             testoStoria.append("L'abilità non è ancora pronta!\n");
         }
     }//GEN-LAST:event_abilityActionPerformed
+
+    private void saveCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCsvActionPerformed
+        try {
+            FileManager.salvaCsv(this , b, e);
+        } catch (IOException ex) {
+            System.getLogger(Turno.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_saveCsvActionPerformed
+
+    private void caricaCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caricaCsvActionPerformed
+        try {
+            this.g =FileManager.caricaCsv(b, e, g);
+            this.e=g.getEroe();
+            this.b=g.getBorsa();
+            setEroe(e);
+            
+            inventario();
+            stazEroe();
+        } catch (IOException ex) {
+            System.getLogger(Turno.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_caricaCsvActionPerformed
 
     
     
@@ -387,12 +425,10 @@ public class Turno extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ability;
     private javax.swing.JButton bevi;
+    private javax.swing.JButton caricaCsv;
+    private javax.swing.JButton caricaSer;
     private javax.swing.JButton esplora;
     private javax.swing.JLabel eventiImg;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -401,6 +437,8 @@ public class Turno extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton mangia;
     private javax.swing.JLabel personaggio;
+    private javax.swing.JButton saveCsv;
+    private javax.swing.JButton saveSer;
     private javax.swing.JScrollPane storia;
     private javax.swing.JTextArea testoStoria;
     private javax.swing.JLabel turno;

@@ -14,10 +14,14 @@ public class Gestore {
     private int nPersonaggio;
     private boolean modalityDemon;
     private Eroe eroe= new Eroe("nessuno",false,0,0,0,true);
+    private Borsa borsa= new Borsa();
     Random rand= new Random();
 
-    public Gestore( boolean modalityDemon) {
+    public Gestore(int nPersonaggio, boolean modalityDemon, Eroe eroe, Borsa borsa) {
+        this.nPersonaggio = nPersonaggio;
         this.modalityDemon = modalityDemon;
+        this.eroe= eroe;
+        this.borsa= borsa;
     }
     
     public void bevi(Eroe eroe,Borsa borsa){
@@ -103,4 +107,13 @@ public class Gestore {
         }
         eroe.setAbility(false);
     }
+
+    public Eroe getEroe() {
+        return eroe;
+    }
+
+    public Borsa getBorsa() {
+        return borsa;
+    }
+    
 }

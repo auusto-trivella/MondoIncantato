@@ -130,7 +130,7 @@ public class GestoreEvento {
     
     public String personaggiCattivi(Eroe eroe,boolean lucky){
         if(lucky==true){
-            if(evento<=85){
+            if(evento>=85){
                 int persBad = random.nextInt(2); 
             
                 if(persBad==0){//BANDITO
@@ -144,7 +144,7 @@ public class GestoreEvento {
             }
         }
         else{
-            if(evento<=75){
+            if(evento>=75){
                 int persBad = random.nextInt(2); 
             
                 if(persBad==0){//BANDITO

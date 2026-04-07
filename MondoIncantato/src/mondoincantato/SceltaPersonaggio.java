@@ -5,13 +5,11 @@
 package mondoincantato;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class SceltaPersonaggio extends javax.swing.JFrame {
@@ -21,10 +19,11 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
     /**
      * Creates new form SceltaPersonaggio
      */
-private boolean modalitaDemone;
+    private Borsa b;
+    private Eroe e;
+    private boolean modalitaDemone;
     private JLabel eroeSelezionato = null;
     private Turno f3;
-    private Eroe eroe;
 
     public SceltaPersonaggio(boolean sceltaArrivata) { 
         this.modalitaDemone = sceltaArrivata; 
@@ -33,10 +32,9 @@ private boolean modalitaDemone;
         initComponents(); 
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); 
         
-        eroe= new Eroe("nessuno",false,0,0,0,false);
+        e= new Eroe("nessuno",false,0,0,0,false);
         f3 = new Turno();
         
-        // Puliamo il contenuto generato da NetBeans e mettiamo il nostro
         organizzaLayoutEroi(this.modalitaDemone);
     }
 
@@ -57,7 +55,6 @@ private boolean modalitaDemone;
         int imgW = w / numeroEroi;
         int imgH = (int) (h * 0.75);
 
-        // Configura il ridimensionamento e i click
         configuraInterazioneEroe(KORG, imgW, imgH);
         configuraInterazioneEroe(LIRAEL, imgW, imgH);
         configuraInterazioneEroe(ASTER, imgW, imgH);
@@ -102,15 +99,15 @@ private boolean modalitaDemone;
         label.setText("");
         label.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0), 5)); // Bordo vuoto
 
-        // 2. LOGICA DI SELEZIONE CLICCABILE
+
         label.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                // Deseleziona il vecchio
+
                 if (eroeSelezionato != null) {
                     eroeSelezionato.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0), 5));
                 }
-                // Seleziona il nuovo (Bordo Arancione)
+
                 eroeSelezionato = label;
                 label.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 5));
             }
@@ -136,18 +133,9 @@ private boolean modalitaDemone;
         p.setLayout(new javax.swing.BoxLayout(p, javax.swing.BoxLayout.Y_AXIS));
         p.setOpaque(false);
 
-        nome.setForeground(Color.WHITE);
-        nome.setFont(new java.awt.Font("Verdana", java.awt.Font.BOLD, 30));
-        bonus.setForeground(new Color(200, 200, 200));
-        bonus.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 20));
 
-        img.setAlignmentX(Component.CENTER_ALIGNMENT);
-        nome.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bonus.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        p.add(javax.swing.Box.createVerticalGlue());
+        p.add(javax.swing.Box.createVerticalGlue());// posiziona al centro la selazione
         p.add(img);
-        p.add(javax.swing.Box.createVerticalStrut(20));
         p.add(nome);
         p.add(bonus);
         p.add(javax.swing.Box.createVerticalGlue());
@@ -168,8 +156,8 @@ private boolean modalitaDemone;
         KORG = new javax.swing.JLabel();
         ASTER = new javax.swing.JLabel();
         FIZZLE = new javax.swing.JLabel();
-        LIRAEL = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        LIRAEL = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -197,25 +185,45 @@ private boolean modalitaDemone;
         FIZZLE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/fizzle.png"))); // NOI18N
         FIZZLE.setText("jLabel1");
 
+        jLabel5.setFont(new java.awt.Font("Verdana", 1, 30)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("KORG");
+
         LIRAEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/lirael.png"))); // NOI18N
         LIRAEL.setText("jLabel1");
 
-        jLabel5.setText("KORG");
-
+        jLabel6.setBackground(new java.awt.Color(200, 200, 200));
+        jLabel6.setFont(new java.awt.Font("Verdana", 2, 20)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(200, 200, 200));
         jLabel6.setText("+2 CIBO");
 
+        jLabel7.setFont(new java.awt.Font("Verdana", 1, 30)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("LIRAEL");
 
+        jLabel8.setBackground(new java.awt.Color(200, 200, 200));
+        jLabel8.setFont(new java.awt.Font("Verdana", 2, 20)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(200, 200, 200));
         jLabel8.setText("+60 VITA");
 
         jLabel9.setText("jLabel9");
 
+        jLabel10.setFont(new java.awt.Font("Verdana", 1, 30)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("ASTER");
 
+        jLabel11.setBackground(new java.awt.Color(200, 200, 200));
+        jLabel11.setFont(new java.awt.Font("Verdana", 2, 20)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(200, 200, 200));
         jLabel11.setText("+2 ACQUA");
 
+        jLabel12.setFont(new java.awt.Font("Verdana", 1, 30)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("FIZZLE");
 
+        jLabel13.setBackground(new java.awt.Color(200, 200, 200));
+        jLabel13.setFont(new java.awt.Font("Verdana", 2, 20)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(200, 200, 200));
         jLabel13.setText("+ FORTUNA");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -223,89 +231,99 @@ private boolean modalitaDemone;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(KORG, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 409, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel11)
-                                .addComponent(jLabel10))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ASTER, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)))
-                        .addGap(78, 78, 78))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LIRAEL, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(FIZZLE, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13))
-                .addGap(158, 158, 158))
+                .addContainerGap(895, Short.MAX_VALUE)
+                .addComponent(ASTER, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(FIZZLE, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(207, 207, 207)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(266, 266, 266)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(162, 162, 162)
+                                        .addComponent(jLabel7))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(142, 142, 142)
+                                        .addComponent(jLabel12))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(KORG, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8))
+                                .addGap(151, 151, 151)
+                                .addComponent(jLabel9))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(135, 135, 135)
-                                .addComponent(jLabel7)))
-                        .addGap(151, 151, 151)
-                        .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LIRAEL, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel10))
+                                .addGap(305, 305, 305))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(472, 472, 472)
+                        .addComponent(jLabel8)))
+                .addGap(0, 746, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(609, 609, 609)
+                .addComponent(jLabel13)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(FIZZLE, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ASTER, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel7))
-                                    .addComponent(jLabel12))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel8))
-                                    .addComponent(jLabel13)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel11)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(KORG)
-                        .addGap(32, 32, 32))
+                        .addGap(101, 101, 101)
+                        .addComponent(LIRAEL, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(LIRAEL, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(89, 89, 89)
+                        .addComponent(KORG)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(335, 335, 335)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel12))
+                        .addGap(18, 18, 18)))
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(ASTER, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(FIZZLE, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addGap(80, 80, 80)
+                .addComponent(jLabel13)
+                .addGap(141, 141, 141))
         );
 
         pack();
@@ -314,25 +332,12 @@ private boolean modalitaDemone;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 if (eroeSelezionato == null) return;
 
-    // 1. Creiamo il gestore
-    Gestore g = new Gestore(this.modalitaDemone);
+    Gestore g = new Gestore(0,this.modalitaDemone,e,b);
 
-    // 2. SETTIAMO IL NUMERO (Assicurati che questa riga ci sia!)
-    int n = 0;
-    if (eroeSelezionato == FIZZLE) n = 1;
-    else if (eroeSelezionato == KORG) n = 2;
-    else if (eroeSelezionato == LIRAEL) n = 3;
-    else if (eroeSelezionato == ASTER) n = 4;
 
-    g.setnPersonaggio(n); // <--- Forza il numero nel gestore
 
-    // 3. RECUPERIAMO L'EROE
     Eroe scelto = g.sceltaPersonaggio(); 
     
-    // DEBUG VELOCE: Vediamo cosa ha creato il gestore prima di passarlo
-    System.out.println("Il gestore ha creato l'eroe: " + scelto.getNome());
-
-    // 4. PASSIAMO AL TURNO
     f3.setEroe(scelto);
     f3.setVisible(true);
     this.dispose();

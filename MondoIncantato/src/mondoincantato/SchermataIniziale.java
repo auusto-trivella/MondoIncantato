@@ -10,7 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 
 public class SchermataIniziale extends javax.swing.JFrame {
-
+    private Borsa b;
+    private Eroe e;
     private Gestore g;
     private SceltaPersonaggio f2;
     private boolean isDemoneSelezionato = false;
@@ -18,12 +19,12 @@ public class SchermataIniziale extends javax.swing.JFrame {
     public SchermataIniziale() {
         this.setUndecorated(true);
         initComponents();
-        g = new Gestore(false);
+        g = new Gestore(0,false,e,b);
         configuraSchermataStoria();
     }
 
     private void configuraSchermataStoria() {
-        // 1. Dimensioni Schermo
+
         Dimension dimSchermo = Toolkit.getDefaultToolkit().getScreenSize();
         int w = dimSchermo.width;
         int h = dimSchermo.height;
@@ -31,29 +32,27 @@ public class SchermataIniziale extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setSize(w, h);
 
-        // 2. Setup Pannello (Null Layout)
         jPanel1.setLayout(null);
         this.setContentPane(jPanel1);
 
-        // 3. Immagine di Sfondo (Statico con tutto disegnato sopra)
-        // Assicurati che il file si chiami esattamente cosi nella cartella mondoincantato
+
         ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/mondoincantato/sfondo-mod.png"));
         Image imgScalata = iconaOriginale.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         jLabelSfondo.setIcon(new ImageIcon(imgScalata));
         jLabelSfondo.setBounds(0, 0, w, h);
 
         // --- BOTTONE NORMALE (VERDE) ---
-        int normW = (int) (w * 0.22); // Leggermente più largo per sicurezza
+        int normW = (int) (w * 0.22); 
         int normH = (int) (h * 0.15);
-        int normX = (int) (w * 0.70); // Un po' più a sinistra rispetto a prima
-        int normY = (int) (h * 0.27); // Posizione del tasto superiore
+        int normX = (int) (w * 0.70); 
+        int normY = (int) (h * 0.27); 
         configuraBottoneInvisibile(difNormale, normX, normY, normW, normH);
 
 // --- BOTTONE DEMONE (ROSSO) ---
         int demoW = (int) (w * 0.22);
         int demoH = (int) (h * 0.15);
         int demoX = (int) (w * 0.70);
-        int demoY = (int) (h * 0.60); // Posizione del tasto inferiore
+        int demoY = (int) (h * 0.60); 
         configuraBottoneInvisibile(difDemone, demoX, demoY, demoW, demoH);
 
 
@@ -84,24 +83,12 @@ public class SchermataIniziale extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         difNormale = new javax.swing.JButton();
         difDemone = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabelSfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 3, 24)); // NOI18N
-        jLabel1.setText("STORIA DEL GIOCO:");
-
-        jLabel2.setFont(new java.awt.Font("Source Code Pro", 1, 12)); // NOI18N
-        jLabel2.setText("Ti hanno rinchiuso in una capsula con la forza, ti sei svegliato in un mondo a se stante. Sei sconvolto, ma devi prendere una scelta ");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
-        jLabel3.setText("SCEGLI DIFFICOLA':");
 
         difNormale.setText("NORMALE");
         difNormale.addActionListener(new java.awt.event.ActionListener() {
@@ -137,20 +124,11 @@ public class SchermataIniziale extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addGap(646, 646, 646)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(50, 50, 50))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(87, 87, 87)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(difDemone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(difNormale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(80, 80, 80))))
+                    .addComponent(difDemone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(difNormale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(80, 80, 80))
             .addGroup(layout.createSequentialGroup()
                 .addGap(151, 151, 151)
                 .addComponent(jLabelSfondo)
@@ -161,17 +139,10 @@ public class SchermataIniziale extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(difNormale, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(difDemone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(132, Short.MAX_VALUE)
+                .addComponent(difNormale, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(difDemone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelSfondo)
@@ -183,11 +154,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void difNormaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difNormaleActionPerformed
-        difNormale.setBorderPainted(true);
-        difNormale.setBorder(javax.swing.BorderFactory.createLineBorder(Color.GREEN, 3));
 
-        // Qui metti la tua logica di gioco
-        System.out.println("Difficoltà Normale selezionata!");
         g.setMod(false);
         SceltaPersonaggio f2 = new SceltaPersonaggio(isDemoneSelezionato);
         f2.setVisible(true);
@@ -195,10 +162,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
     }//GEN-LAST:event_difNormaleActionPerformed
 
     private void difDemoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difDemoneActionPerformed
-        difDemone.setBorderPainted(true);
-        difDemone.setBorder(javax.swing.BorderFactory.createLineBorder(Color.RED, 3));
 
-        System.out.println("Difficoltà Demone selezionata!");
         g.setMod(true);
         isDemoneSelezionato = true;
         SceltaPersonaggio f2 = new SceltaPersonaggio(isDemoneSelezionato);
@@ -234,9 +198,6 @@ public class SchermataIniziale extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton difDemone;
     private javax.swing.JButton difNormale;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelSfondo;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
