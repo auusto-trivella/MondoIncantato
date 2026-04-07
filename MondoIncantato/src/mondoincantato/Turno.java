@@ -27,7 +27,7 @@ public class Turno extends javax.swing.JFrame {
         b= new Borsa();
         g= new Gestore(false);
     }
-
+    
     public void setEroe(Eroe nuovoEroe) {
         this.e = nuovoEroe;
         
@@ -200,7 +200,7 @@ public class Turno extends javax.swing.JFrame {
         personaggio.setText("jLabel8");
         getContentPane().add(personaggio, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 180, 474, 352));
 
-        eventiImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/cibo.png"))); // NOI18N
+        eventiImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/sconfitta.png"))); // NOI18N
         eventiImg.setText("jLabel9");
         getContentPane().add(eventiImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 630, 352));
 
@@ -238,65 +238,84 @@ public class Turno extends javax.swing.JFrame {
 
     private void esploraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esploraActionPerformed
         nTurno++;
-        turno.setText(""+nTurno);
+        turno.setText("" + nTurno);
         int ev = ge.sceltaEvento();
-       String fortunato = e.getNome();
+        String fortunato = e.getNome();
 
-   String risultatoEvento = ""; 
+        String risultatoEvento = "";
 
-    if (fortunato.equals("FIZZLE")&& e.getLucky()==true) {
-        if (ev <= 30) {
-            risultatoEvento = ge.oggettiBuoni(true, b);
-        } else if (ev <= 60 && ev>30) {
-            risultatoEvento = ge.PersonaggiBuoni(e, true);
-        } else if (ev <= 85 && ev>60) {
-            risultatoEvento = ge.imprevisti(e, true);
-        } else if (ev>85){
-            risultatoEvento = ge.personaggiCattivi(e, true);
+        if (fortunato.equals("FIZZLE") && e.getLucky() == true) {
+            if (ev <= 30) {
+                risultatoEvento = ge.oggettiBuoni(true, b);
+            } else if (ev <= 60 && ev > 30) {
+                risultatoEvento = ge.PersonaggiBuoni(e, true);
+            } else if (ev <= 85 && ev > 60) {
+                risultatoEvento = ge.imprevisti(e, true);
+            } else if (ev > 85) {
+                risultatoEvento = ge.personaggiCattivi(e, true);
+            }
+        } else {
+            if (ev <= 25) {
+                risultatoEvento = ge.oggettiBuoni(false, b);
+            } else if (ev <= 50 && ev > 25) {
+                risultatoEvento = ge.PersonaggiBuoni(e, false);
+            } else if (ev <= 75 && ev > 50) {
+                risultatoEvento = ge.imprevisti(e, false);
+            } else if (ev > 75) {
+                risultatoEvento = ge.personaggiCattivi(e, false);
+            }
         }
-    } else {
-        if (ev <= 25) {
-            risultatoEvento = ge.oggettiBuoni(false, b);
-        } else if (ev <= 50 && ev>25) {
-            risultatoEvento = ge.PersonaggiBuoni(e, false);
-        } else if (ev <= 75 && ev>50) {
-            risultatoEvento = ge.imprevisti(e, false);
-        } else if (ev>75){
-            risultatoEvento = ge.personaggiCattivi(e, false);
-        }
-    }
-    testoStoria.append("TURNO " + nTurno + ": " + risultatoEvento + "\n");
-        
-    String nomeFile = "";
-    String log = risultatoEvento;
+        testoStoria.append("TURNO " + nTurno + ": " + risultatoEvento + "\n");
 
-    if (log.contains("DRAGO")) {
-        nomeFile = "drago.png";
-    } else if (log.contains("FATA")) {
-        nomeFile = "fata.png";
-    } else if (log.contains("BANDITO")) {
-        nomeFile = "bandito.png";
-    } else if (log.contains("DRUIDO")) {
-        nomeFile = "druido.png";
-    } else if (log.contains("LOCANDIERE")) {
-        nomeFile = "locandiere.png";
-    } else if (log.contains("SORGENTE")) {
-        nomeFile = "borraccia.png"; 
-    } else if (log.contains("MELA") || log.contains("MELE")) {
-        nomeFile = "cibo.png"; 
-    } else {
-        eventiImg.setIcon(null); 
-    }
+        String nomeFile = "";
+        String log = risultatoEvento;
 
-    
-    if (!nomeFile.equals("")) {
-        java.net.URL url = getClass().getResource("/mondoincantato/" + nomeFile);
-        if (url != null) {
-            eventiImg.setIcon(new javax.swing.ImageIcon(url));
+        if (log.contains("DRAGO")) {
+            nomeFile = "drago.png";
+        } else if (log.contains("FATA")) {
+            nomeFile = "fata.png";
+        } else if (log.contains("BANDITO")) {
+            nomeFile = "bandito.png";
+        } else if (log.contains("DRUIDO")) {
+            nomeFile = "druido.png";
+        } else if (log.contains("LOCANDIERE")) {
+            nomeFile = "locandiere.png";
+        } else if (log.contains("SORGENTE")) {
+            nomeFile = "borraccia.png";
+        } else if (log.contains("MELA") || log.contains("MELE")) {
+            nomeFile = "cibo.png";
+        } else {
+            eventiImg.setIcon(null);
         }
-    }
-           
-    inventario();
+        //VITTORIA
+        if (nTurno >= 100) {
+            risultatoEvento = "HAI SCONFITTO IL SIGNORE DELLE OMBRE! IL MONDO È SALVO!";
+            testoStoria.append(risultatoEvento + "\n");
+            nomeFile = "vittoria.png";
+            esplora.setEnabled(false);
+            mangia.setEnabled(false);
+            bevi.setEnabled(false);
+            ability.setEnabled(false);
+        }
+        //SCONFITTA
+        if (e.getVita() <= 0 || e.getSete() >= 100 || e.getFame() >= 100) {
+            valSalute.setText("0");
+            testoStoria.append("--- SEI MORTO --- La tua avventura finisce qui");
+            nomeFile = "sconfitta.png";
+            esplora.setEnabled(false);
+            mangia.setEnabled(false);
+            bevi.setEnabled(false);
+            ability.setEnabled(false);
+        }
+
+        if (!nomeFile.equals("")) {
+            java.net.URL url = getClass().getResource("/mondoincantato/" + nomeFile);
+            if (url != null) {
+                eventiImg.setIcon(new javax.swing.ImageIcon(url));
+            }
+        }
+
+        inventario();
     }//GEN-LAST:event_esploraActionPerformed
 
     private void mangiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mangiaActionPerformed
