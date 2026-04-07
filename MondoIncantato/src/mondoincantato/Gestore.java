@@ -13,7 +13,7 @@ import java.util.Random;
 public class Gestore {
     private int nPersonaggio;
     private boolean modalityDemon;
-    private Eroe eroeSelezionato= new Eroe("nessuno",false,0,0,0,false);
+    private Eroe eroe= new Eroe("nessuno",false,0,0,0,true);
     Random rand= new Random();
 
     public Gestore( boolean modalityDemon) {
@@ -43,37 +43,37 @@ public class Gestore {
         if (modalityDemon == false) {
             
         if (nPersonaggio == 1) { // GNOMO
-            eroeSelezionato = new Eroe("FIZZLE", false, 50, -30, -30, true);
+            eroe = new Eroe("FIZZLE", false, 50, -30, -30, true);
         } 
         else if (nPersonaggio == 2) { // ORCO
-            eroeSelezionato = new Eroe("KORG", false, 100, -20, 0, false);
+            eroe = new Eroe("KORG", false, 100, -20, 0, true);
         } 
         else if (nPersonaggio == 3) { // ELFO
-            eroeSelezionato = new Eroe("LIRAEL", false, 70, 0, 0, false);
+            eroe = new Eroe("LIRAEL", false, 70, 0, 0, true);
         } 
         else if (nPersonaggio == 4) { // MINOTAURO
-            eroeSelezionato = new Eroe("ASTER", false, 110, 0, -20, false);
+            eroe = new Eroe("ASTER", false, 110, 0, -20, true);
         }
     } 
     else { 
         if (nPersonaggio == 2) {
-            eroeSelezionato = new Eroe("KORG", false, 100, -20, 0, false);
+            eroe = new Eroe("KORG", false, 100, -20, 0, true);
         } 
         else if (nPersonaggio == 3) {
-            eroeSelezionato = new Eroe("LIRAEL", false, 70, 0, 0, false);
+            eroe = new Eroe("LIRAEL", false, 70, 0, 0, true);
         } 
         else {
-            eroeSelezionato = new Eroe("ASTER", false, 110, 0, -20, false);
+            eroe = new Eroe("ASTER", false, 110, 0, -20, true);
         }
     }
-         return eroeSelezionato;
+         return eroe;
     }
     
     public void setnPersonaggio(int n) {
         this.nPersonaggio = n;
     }
     
-    public boolean abilitySpecial(boolean ability){
+     public boolean abilitySpecial(boolean ability){
         int possibility= rand.nextInt(11)+ 1; 
         
         if(possibility<=2){
@@ -84,26 +84,23 @@ public class Gestore {
         }
         return ability;
     }
-    
-    public void usaAbility(boolean ability,String nome,boolean lucky,Borsa borsa){
-        if(ability==true){
-            if(nome.contains("FIZZLE")){
-                lucky=true;
-            }
-            else if(nome.contains("KORG")){
-                for(int i=0;i<2;i++){
+     
+    public void usaAbility(Eroe eroe, Borsa borsa) {
+        if (eroe.isAbility()) {
+            if (eroe.getNome().contains("FIZZLE")) {
+                eroe.setLucky(true);
+            } else if (eroe.getNome().contains("KORG")) {
+                for (int i = 0; i < 2; i++) {
                     borsa.aggiungiCibo();
                 }
-            }
-            else if(nome.contains("LIRAEL")){
-                eroeSelezionato.setVita(eroeSelezionato.getVita()+60);
-            }
-            else{
-                for(int i=0;i<2;i++){
+            } else if (eroe.getNome().contains("LIRAEL")) {
+                eroe.setVita(eroe.getVita() + 60);
+            } else {
+                for (int i = 0; i < 2; i++) {
                     borsa.aggiungiAcqua();
                 }
             }
         }
-        ability=false;
+        eroe.setAbility(false);
     }
 }

@@ -16,7 +16,7 @@ public class GestoreEvento {
     Random random = new Random();
     
     public int sceltaEvento(){
-        evento = random.nextInt(101)+ 1; 
+        evento = random.nextInt(101); 
         return evento;
     }
     

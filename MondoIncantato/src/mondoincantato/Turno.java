@@ -18,12 +18,14 @@ public class Turno extends javax.swing.JFrame {
     private Borsa b;
     private GestoreEvento ge;
     private Eroe e;
+    private Gestore g; 
     private int nTurno=0;
     public Turno() {
         initComponents();
-        e= new Eroe("nessuno",false,0,0,0,false);
+        e= new Eroe("nessuno",false,0,0,0,true);
         ge = new GestoreEvento();
         b= new Borsa();
+        g= new Gestore(false);
     }
 
     public void setEroe(Eroe nuovoEroe) {
@@ -93,7 +95,7 @@ public class Turno extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         turno = new javax.swing.JLabel();
         personaggio = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        eventiImg = new javax.swing.JLabel();
         valAcqua = new javax.swing.JLabel();
         storia = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -109,18 +111,33 @@ public class Turno extends javax.swing.JFrame {
         ability.setBackground(new java.awt.Color(160, 130, 60));
         ability.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         ability.setText("ABILITY");
+        ability.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abilityActionPerformed(evt);
+            }
+        });
         getContentPane().add(ability, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 560, -1, -1));
 
         mangia.setBackground(new java.awt.Color(145, 140, 125));
         mangia.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         mangia.setForeground(new java.awt.Color(230, 225, 210));
         mangia.setText("MANGIA");
+        mangia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mangiaActionPerformed(evt);
+            }
+        });
         getContentPane().add(mangia, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 635, -1, 50));
 
         bevi.setBackground(new java.awt.Color(145, 140, 125));
         bevi.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         bevi.setForeground(new java.awt.Color(230, 225, 210));
         bevi.setText("BEVI");
+        bevi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                beviActionPerformed(evt);
+            }
+        });
         getContentPane().add(bevi, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 710, -1, 50));
 
         esplora.setBackground(new java.awt.Color(160, 130, 60));
@@ -183,9 +200,9 @@ public class Turno extends javax.swing.JFrame {
         personaggio.setText("jLabel8");
         getContentPane().add(personaggio, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 180, 474, 352));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/borraccia.png"))); // NOI18N
-        jLabel9.setText("jLabel9");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(434, 150, 460, 352));
+        eventiImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/cibo.png"))); // NOI18N
+        eventiImg.setText("jLabel9");
+        getContentPane().add(eventiImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 630, 352));
 
         valAcqua.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         valAcqua.setText("0");
@@ -227,14 +244,14 @@ public class Turno extends javax.swing.JFrame {
 
    String risultatoEvento = ""; 
 
-    if (fortunato.equals("FIZZLE")) {
+    if (fortunato.equals("FIZZLE")&& e.getLucky()==true) {
         if (ev <= 30) {
             risultatoEvento = ge.oggettiBuoni(true, b);
         } else if (ev <= 60 && ev>30) {
             risultatoEvento = ge.PersonaggiBuoni(e, true);
         } else if (ev <= 85 && ev>60) {
             risultatoEvento = ge.imprevisti(e, true);
-        } else {
+        } else if (ev>85){
             risultatoEvento = ge.personaggiCattivi(e, true);
         }
     } else {
@@ -242,16 +259,84 @@ public class Turno extends javax.swing.JFrame {
             risultatoEvento = ge.oggettiBuoni(false, b);
         } else if (ev <= 50 && ev>25) {
             risultatoEvento = ge.PersonaggiBuoni(e, false);
-        } else if (ev <= 75 && ev>75) {
+        } else if (ev <= 75 && ev>50) {
             risultatoEvento = ge.imprevisti(e, false);
-        } else {
+        } else if (ev>75){
             risultatoEvento = ge.personaggiCattivi(e, false);
         }
     }
     testoStoria.append("TURNO " + nTurno + ": " + risultatoEvento + "\n");
         
+    String nomeFile = "";
+    String log = risultatoEvento;
+
+    if (log.contains("DRAGO")) {
+        nomeFile = "drago.png";
+    } else if (log.contains("FATA")) {
+        nomeFile = "fata.png";
+    } else if (log.contains("BANDITO")) {
+        nomeFile = "bandito.png";
+    } else if (log.contains("DRUIDO")) {
+        nomeFile = "druido.png";
+    } else if (log.contains("LOCANDIERE")) {
+        nomeFile = "locandiere.png";
+    } else if (log.contains("SORGENTE")) {
+        nomeFile = "borraccia.png"; 
+    } else if (log.contains("MELA") || log.contains("MELE")) {
+        nomeFile = "cibo.png"; 
+    } else {
+        eventiImg.setIcon(null); 
+    }
+
+    
+    if (!nomeFile.equals("")) {
+        java.net.URL url = getClass().getResource("/mondoincantato/" + nomeFile);
+        if (url != null) {
+            eventiImg.setIcon(new javax.swing.ImageIcon(url));
+        }
+    }
+           
     inventario();
     }//GEN-LAST:event_esploraActionPerformed
+
+    private void mangiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mangiaActionPerformed
+
+        if (b.contaCibo() > 0) {
+            b.consumaCibo();
+            e.setFame(e.getFame() - 20);
+            e.setVita(e.getVita()+10);
+        }
+
+    }//GEN-LAST:event_mangiaActionPerformed
+
+    private void beviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beviActionPerformed
+        if (b.contaAcqua() > 0) {
+            b.consumaAcqua();
+            e.setSete(e.getSete() - 20);
+            e.setVita(e.getVita()+10);
+        }
+    }//GEN-LAST:event_beviActionPerformed
+
+    private void abilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abilityActionPerformed
+        if (e.isAbility()) {
+                g.usaAbility(e, b);
+
+                if (e.getNome().contains("FIZZLE")) {
+                    testoStoria.append("FIZZLE attiva il suo sesto senso! Prossimi ritrovamenti raddoppiati.\n");
+                } else if (e.getNome().contains("KORG")) {
+                    testoStoria.append("KORG ha cacciato: +2 Cibo in borsa!\n");
+                } else if (e.getNome().contains("LIRAEL")) {
+                    testoStoria.append("LIRAEL usa il canto curativo: +60 HP!\n");
+                } else {
+                    testoStoria.append("ASTER ha trovato una fonte: +2 Acqua in borsa!\n");
+                }
+
+                inventario(); // aggiorna le label
+
+        } else {
+            testoStoria.append("L'abilità non è ancora pronta!\n");
+        }
+    }//GEN-LAST:event_abilityActionPerformed
 
     
     
@@ -284,6 +369,7 @@ public class Turno extends javax.swing.JFrame {
     private javax.swing.JButton ability;
     private javax.swing.JButton bevi;
     private javax.swing.JButton esplora;
+    private javax.swing.JLabel eventiImg;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -293,7 +379,6 @@ public class Turno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton mangia;
     private javax.swing.JLabel personaggio;
