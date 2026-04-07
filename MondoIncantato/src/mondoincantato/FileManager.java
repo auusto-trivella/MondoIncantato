@@ -6,10 +6,14 @@ package mondoincantato;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
 /**
@@ -18,7 +22,8 @@ import java.util.Arrays;
  */
 public class FileManager {
     
-    private static String csvFile = "MondoIncantato.csv";
+    private static String csvFile = "MondoIncantatoCSV.csv";
+    private static String serFile= "MondoIncantatoSER.ser";
 
     public static void salvaCsv(Turno t,Borsa b,Eroe e) throws IOException {
         var studenti = Arrays.asList(
@@ -63,5 +68,36 @@ public class FileManager {
         }
         return g;
     }
+    
+    public static void salvaSer(Contenitore contSer){
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(serFile))) {
+            oos.writeObject(contSer);
+        }   catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static Gestore caricaSer(Contenitore contSer, Eroe e, Gestore g) throws IOException, ClassNotFoundException {
+        Borsa b = new Borsa();
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(serFile))) {
+
+            contSer = (Contenitore) ois.readObject();
+
+            e.setNome(contSer.getNome());
+            e.setVita(contSer.getSalute());
+            e.setSete(contSer.getSete());
+            e.setFame(contSer.getFame());
+
+            for (int j = 0; j < contSer.getAcqua(); j++) {
+                b.aggiungiAcqua();
+            }
+            for (int k = 0; k < contSer.getCibo(); k++) {
+                b.aggiungiCibo();
+            }
+
+            g = new Gestore(contSer.getTurno(), false, e, b);
+        }
+        return g;
+    }
 }

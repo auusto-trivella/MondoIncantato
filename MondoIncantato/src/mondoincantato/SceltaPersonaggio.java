@@ -334,7 +334,13 @@ if (eroeSelezionato == null) return;
 
     Gestore g = new Gestore(0,this.modalitaDemone,e,b);
 
+    int n = 0;
+    if (eroeSelezionato == FIZZLE) n = 1;
+    else if (eroeSelezionato == KORG) n = 2;
+    else if (eroeSelezionato == LIRAEL) n = 3;
+    else if (eroeSelezionato == ASTER) n = 4;
 
+    g.setnPersonaggio(n); 
 
     Eroe scelto = g.sceltaPersonaggio(); 
     

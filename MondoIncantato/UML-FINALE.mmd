@@ -1,0 +1,143 @@
+classDiagram
+direction TB
+    class SchermataIniziale {
+	    -Gestore g
+	    -boolean isDemoneSelezionato
+	    +SchermataIniziale()
+	    -difNormaleActionPerformed()
+	    -difDemoneActionPerformed()
+    }
+
+    class SceltaPersonaggio {
+	    -Eroe e
+	    -Borsa b
+	    -Turno f3
+	    +SceltaPersonaggio(boolean sceltaArrivata)
+	    -jButton1ActionPerformed()
+    }
+
+    class Turno {
+	    -Borsa b
+	    -Eroe e
+	    -GestoreEvento ge
+	    -int nTurno
+	    +getnTurno() int
+    }
+
+    class Borsa {
+	    -ArrayList~Cure~ listaCibo
+	    -ArrayList~Cure~ listaAcqua
+	    +aggiungiCibo()
+	    +consumaCibo() Cure
+	    +aggiungiAcqua()
+	    +consumaAcqua() Cure
+	    +contaAcqua() int
+	    +contaCibo() int
+    }
+
+    class Cure {
+	    -int valCibo : 10
+	    -int valAcqua : 10
+	    +getValoreCibo() int
+	    +getValoreAcqua() int
+    }
+
+    class Contenitore {
+	    -int salute
+	    -int fame
+	    -int sete
+	    -int turno
+	    -int acqua
+	    -int cibo
+	    -String nome
+	    -long serialVersionUID$
+	    +Contenitore(Borsa b, Eroe e, Turno t)
+	    +getSalute() int
+	    +getFame() int
+	    +getTurno() int
+    }
+
+    class GestoreEvento {
+	    -Random random
+	    +sceltaEvento() int
+	    +oggettiBuoni(boolean lucky, Borsa borsa) String
+	    +imprevisti(Eroe eroe, boolean lucky) String
+    }
+
+    class FileManager {
+	    -String csvFile$
+	    -String serFile$
+	    +salvaCsv(Turno t, Borsa b, Eroe e) void$
+	    +caricaSer(Contenitore c, Eroe e, Gestore g) Gestore$
+    }
+
+    class Eroe {
+	    -int vita
+	    -int fame
+	    -int sete
+	    -String nome
+	    -boolean ability
+	    -boolean lucky
+	    +Eroe(String nome, boolean lucky, int vita, int fame, int sete, boolean ability)
+	    +getVita() int
+	    +setVita(int vita) void
+	    +getFame() int
+	    +setFame(int fame) void
+	    +getSete() int
+	    +setSete(int sete) void
+	    +getNome() String
+	    +setNome(String nome) void
+	    +isAbility() boolean
+	    +setAbility(boolean ability) void
+	    +getLucky() boolean
+	    +setLucky(boolean lucky) void
+    }
+class Gestore {
+        -int nPersonaggio
+        -boolean modalityDemon
+        -Eroe eroe
+        -Borsa borsa
+        -Random rand
+        +Gestore(int nPersonaggio, boolean modalityDemon, Eroe eroe, Borsa borsa)
+        +bevi(Eroe eroe, Borsa borsa) void
+        +mangia(Eroe eroe, Borsa borsa) void
+        +setMod(boolean val) void
+        +sceltaPersonaggio() Eroe
+        +setnPersonaggio(int n) void
+        +abilitySpecial(boolean ability) boolean
+        +usaAbility(Eroe eroe, Borsa borsa) void
+        +getEroe() Eroe
+        +getBorsa() Borsa
+    }
+	class Avvio {
+        -SchermataIniziale f1
+        -JButton cambioPag
+        -JLabel jLabel1
+        -JPanel jPanel1
+        +Avvio()
+        -configuraSchermataPersonalizzata() void
+        -initComponents() void
+        -cambioPagActionPerformed(ActionEvent evt) void
+        +main(String[] args)$ void
+    }
+	class MondoIncantato {
+        +main(String[] args)$ void
+    }
+	<<Serializable>> Contenitore
+
+    SchermataIniziale --> SceltaPersonaggio
+    SceltaPersonaggio --> Turno
+    Turno "1" *-- "1" Borsa : <br>
+    Turno "1" *-- "1" GestoreEvento : <br>
+    Borsa "1" o-- "*" Cure : <br>
+    Contenitore ..> Borsa : </br>
+    Contenitore ..> Eroe : <br>
+    Contenitore ..> Turno : <br>
+    FileManager ..> Contenitore : <br>
+	Gestore "1" --> "1" Eroe 
+    Gestore "1" --> "1" Borsa 
+	JFrame <|-- Avvio 
+    Avvio "1" --> "1" SchermataIniziale
+	MondoIncantato ..> Avvio 
+    MondoIncantato ..> SchermataIniziale 
+    MondoIncantato ..> Turno 

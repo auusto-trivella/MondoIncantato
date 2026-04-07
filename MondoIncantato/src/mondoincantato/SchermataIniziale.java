@@ -4,7 +4,6 @@ package mondoincantato;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.Image;
-import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -56,7 +55,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
         configuraBottoneInvisibile(difDemone, demoX, demoY, demoW, demoH);
 
 
-        // 5. Aggiunta al pannello (L'ordine è fondamentale: bottoni sopra, sfondo sotto)
+        
         jPanel1.add(difNormale);
         jPanel1.add(difDemone);
         jPanel1.add(jLabelSfondo);
@@ -65,7 +64,7 @@ public class SchermataIniziale extends javax.swing.JFrame {
         jPanel1.repaint();
     }
 
-    // Metodo per rendere i bottoni invisibili ma cliccabili (come in Avvio)
+    // Metodo per rendere i bottoni invisibili ma cliccabili 
     private void configuraBottoneInvisibile(JButton b, int x, int y, int w, int h) {
         b.setBounds(x, y, w, h);
         b.setContentAreaFilled(false);

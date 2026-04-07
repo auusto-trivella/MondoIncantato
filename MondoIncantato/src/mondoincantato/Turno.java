@@ -17,24 +17,27 @@ public class Turno extends javax.swing.JFrame {
     /**
      * Creates new form Turno
      */
+    
     private Borsa b;
     private Eroe e;
     private GestoreEvento ge;
     private Gestore g; 
     private int nTurno=0;
+    private Contenitore contSer;
     public Turno() {
         initComponents();
         e= new Eroe("nessuno",false,0,0,0,true);
         ge = new GestoreEvento();
         b= new Borsa();
         g= new Gestore(0,false,e,b);
+        
     }
     
     public void setEroe(Eroe nuovoEroe) {
         this.e = nuovoEroe;
         
         if (this.e != null) {
-            stazEroe(); // Forza l'aggiornamento delle label
+            stazEroe(); 
         }
         String nome = e.getNome();
         String file = "";
@@ -198,9 +201,19 @@ public class Turno extends javax.swing.JFrame {
         getContentPane().add(caricaCsv, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
 
         saveSer.setText("SALVA SER");
+        saveSer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveSerActionPerformed(evt);
+            }
+        });
         getContentPane().add(saveSer, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, -1));
 
         caricaSer.setText("CARICA SER");
+        caricaSer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                caricaSerActionPerformed(evt);
+            }
+        });
         getContentPane().add(caricaSer, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -383,7 +396,7 @@ public class Turno extends javax.swing.JFrame {
 
     private void caricaCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caricaCsvActionPerformed
         try {
-            this.g =FileManager.caricaCsv(b, e, g);
+            this.g= FileManager.caricaCsv(b, e, g);
             this.e=g.getEroe();
             this.b=g.getBorsa();
             setEroe(e);
@@ -394,6 +407,28 @@ public class Turno extends javax.swing.JFrame {
             System.getLogger(Turno.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_caricaCsvActionPerformed
+
+    private void saveSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSerActionPerformed
+        contSer= new Contenitore(b,e,this);
+        FileManager.salvaSer(contSer);
+    }//GEN-LAST:event_saveSerActionPerformed
+
+    private void caricaSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caricaSerActionPerformed
+        
+        try {
+            this.g= FileManager.caricaSer(contSer, e, g);
+            this.e=g.getEroe();
+            this.b=g.getBorsa();
+            setEroe(e);
+            
+            inventario();
+            stazEroe();
+        } catch (IOException ex) {
+            System.getLogger(Turno.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (ClassNotFoundException ex) {
+            System.getLogger(Turno.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_caricaSerActionPerformed
 
     
     
