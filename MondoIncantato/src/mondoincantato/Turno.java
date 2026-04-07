@@ -15,11 +15,15 @@ public class Turno extends javax.swing.JFrame {
     /**
      * Creates new form Turno
      */
+    private Borsa b;
+    private GestoreEvento ge;
     private Eroe e;
     private int nTurno=0;
     public Turno() {
         initComponents();
         e= new Eroe("nessuno",false,0,0,0,false);
+        ge = new GestoreEvento();
+        b= new Borsa();
     }
 
     public void setEroe(Eroe nuovoEroe) {
@@ -50,6 +54,16 @@ public class Turno extends javax.swing.JFrame {
         }
     }
 
+    public void inventario(){
+        
+    valCibo.setText("" + b.contaCibo()); 
+    valAcqua.setText("" + b.contaAcqua());
+    
+    valSalute.setText("" + e.getVita());
+    valFame.setText("" + e.getFame());
+    valSete.setText("" + e.getSete());
+    }
+    
     public void stazEroe() {
 
         valSalute.setText("" + e.getVita());
@@ -80,11 +94,12 @@ public class Turno extends javax.swing.JFrame {
         turno = new javax.swing.JLabel();
         personaggio = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        valAcqua = new javax.swing.JLabel();
+        storia = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
+        testoStoria = new javax.swing.JTextArea();
+        valCibo = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         valSalute1 = new javax.swing.JLabel();
         valSalute2 = new javax.swing.JLabel();
 
@@ -172,22 +187,26 @@ public class Turno extends javax.swing.JFrame {
         jLabel9.setText("jLabel9");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(434, 150, 460, 352));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
-        jLabel5.setText("0");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 710, 50, -1));
+        valAcqua.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
+        valAcqua.setText("0");
+        getContentPane().add(valAcqua, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 710, 50, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
-        jLabel6.setText("0");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 640, 50, -1));
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 90, 320, 430));
+        testoStoria.setColumns(20);
+        testoStoria.setRows(5);
+        jScrollPane1.setViewportView(testoStoria);
+
+        storia.setViewportView(jScrollPane1);
+
+        getContentPane().add(storia, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 90, 320, 430));
+
+        valCibo.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
+        valCibo.setText("0");
+        getContentPane().add(valCibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 640, 50, -1));
 
         jLabel10.setForeground(new java.awt.Color(230, 225, 210));
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mondoincantato/turno-img.png"))); // NOI18N
         jLabel10.setText("jLabel10");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -180, 1400, 1200));
-
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 650, -1, -1));
 
         valSalute1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         valSalute1.setText("0");
@@ -203,6 +222,35 @@ public class Turno extends javax.swing.JFrame {
     private void esploraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esploraActionPerformed
         nTurno++;
         turno.setText(""+nTurno);
+        int ev = ge.sceltaEvento();
+       String fortunato = e.getNome();
+
+   String risultatoEvento = ""; 
+
+    if (fortunato.equals("FIZZLE")) {
+        if (ev <= 30) {
+            risultatoEvento = ge.oggettiBuoni(true, b);
+        } else if (ev <= 60 && ev>30) {
+            risultatoEvento = ge.PersonaggiBuoni(e, true);
+        } else if (ev <= 85 && ev>60) {
+            risultatoEvento = ge.imprevisti(e, true);
+        } else {
+            risultatoEvento = ge.personaggiCattivi(e, true);
+        }
+    } else {
+        if (ev <= 25) {
+            risultatoEvento = ge.oggettiBuoni(false, b);
+        } else if (ev <= 50 && ev>25) {
+            risultatoEvento = ge.PersonaggiBuoni(e, false);
+        } else if (ev <= 75 && ev>75) {
+            risultatoEvento = ge.imprevisti(e, false);
+        } else {
+            risultatoEvento = ge.personaggiCattivi(e, false);
+        }
+    }
+    testoStoria.append("TURNO " + nTurno + ": " + risultatoEvento + "\n");
+        
+    inventario();
     }//GEN-LAST:event_esploraActionPerformed
 
     
@@ -240,19 +288,20 @@ public class Turno extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton mangia;
     private javax.swing.JLabel personaggio;
+    private javax.swing.JScrollPane storia;
+    private javax.swing.JTextArea testoStoria;
     private javax.swing.JLabel turno;
+    private javax.swing.JLabel valAcqua;
+    private javax.swing.JLabel valCibo;
     private javax.swing.JLabel valFame;
     private javax.swing.JLabel valSalute;
     private javax.swing.JLabel valSalute1;
